@@ -44,7 +44,8 @@ public class NouveauUtilisateur {
         this.utilisateur = utilisateur;
     }
     
-    public void ajouterUtilisateur(){
+    public String ajouterUtilisateur(){
         utilisateur = utilisateurEJB.creerUtilisateur(utilisateur);
+        return "nouveauUtilisateur.xhtml?faces-redirect=true";
     }
 }

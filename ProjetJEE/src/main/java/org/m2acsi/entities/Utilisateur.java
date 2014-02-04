@@ -1,13 +1,10 @@
 package org.m2acsi.entities;
 
-import java.sql.Date;
-import javax.persistence.CascadeType;
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
 import javax.validation.constraints.Size;
 
 /**
@@ -18,7 +15,7 @@ import javax.validation.constraints.Size;
  */
 
 @Entity
-public class Utilisateur {
+public class Utilisateur implements Serializable{
 
     /**
      * identifiant de l'utilisateur auto-incremente
@@ -28,7 +25,7 @@ public class Utilisateur {
     private Long id;
 
     /**
-     * login de l'utilsiateur
+     * login de l'utilisateur
      */
     @Column(nullable = false, insertable = false)
     @Size(min = 5, max = 20, message = "Login non conforme !")
@@ -70,19 +67,20 @@ public class Utilisateur {
     /**
      * date de creation du compte de l'utilisateur
      */
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date dateCreation;
+//    @Temporal(javax.persistence.TemporalType.DATE)
+//    private Date dateCreation;
 
     public Utilisateur() {
     }
 
-    public Utilisateur(String login, String motDePasse, String nom, String prenom, String email) {
+    public Utilisateur(Long id, String login, String motDePasse, String nom, String prenom, String email) {
+        this.id = id;
         this.login = login;
         this.motDePasse = motDePasse;
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
-        this.dateCreation = new Date(System.currentTimeMillis());         
+//        this.dateCreation = new Date(System.currentTimeMillis());         
     }    
 
     public long getId() {
@@ -133,13 +131,13 @@ public class Utilisateur {
         this.email = email;
     }
 
-    public Date getDateCreation() {
-        return dateCreation;
-    }
-
-    public void setDateCreation(Date dateCreation) {
-        this.dateCreation = dateCreation;
-    }
+//    public Date getDateCreation() {
+//        return dateCreation;
+//    }
+//
+//    public void setDateCreation(Date dateCreation) {
+//        this.dateCreation = dateCreation;
+//    }
 
     
 }
