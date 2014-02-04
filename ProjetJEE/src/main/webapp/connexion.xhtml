@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <head>
+        <title>Connexion</title>
+        <meta name="viewport" content="width=device-width"/>
+    </head>
+    <body>
+        <h1>Connexion</h1>
+        <h:form>
+         <h:panelGrid columns="2">
+                <h:outputLabel value="Login"/>
+                <h:inputText value="#{connexionUtilisateur.login}"/>
+                <h:outputLabel value="Mot de passe"/>
+                <h:inputText value="#{connexionUtilisateur.motDePasse}"/>
+            </h:panelGrid>
+            <h:commandButton value="Connexion !" action="#{connexionUtilisateur.verificationConnexion()}"/>          
+        </h:form>
+    </body>
+</html>

@@ -22,6 +22,7 @@ public class UtilisateurEJB {
     private EntityManager em;
     
     public Utilisateur creerUtilisateur(Utilisateur utilisateur){
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! "+utilisateur);
         em.persist(utilisateur);
         return utilisateur;
     }

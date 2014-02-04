@@ -17,14 +17,14 @@ and open the template in the editor.
                 <h:inputText value="#{nouveauUtilisateur.utilisateur.login}"/>
                 <h:outputLabel value="Mot de passe"/>
                 <h:inputText value="#{nouveauUtilisateur.utilisateur.motDePasse}"/>
-                <h:outputLabel value="email"/>
-                <h:inputText value="#{nouveauUtilisateur.utilisateur.email}"/>
                 <h:outputLabel value="nom"/>
                 <h:inputText value="#{nouveauUtilisateur.utilisateur.nom}"/>
                 <h:outputLabel value="prenom"/>
                 <h:inputText value="#{nouveauUtilisateur.utilisateur.prenom}"/>
+                <h:outputLabel value="email"/>
+                <h:inputText value="#{nouveauUtilisateur.utilisateur.email}"/>
             </h:panelGrid>
-             <h:commandButton value="Creer votre compte" action="#{nouveauUtilisateur.ajouterUtilisateur()}"/>          
+             <h:commandButton value="Creer votre compte" action="#{nouveauUtilisateur.ajouterUtilisateur}"/>          
         </h:form>
 
     </body>

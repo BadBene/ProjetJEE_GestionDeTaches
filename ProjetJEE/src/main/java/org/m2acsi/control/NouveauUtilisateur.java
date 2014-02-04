@@ -6,6 +6,7 @@
 
 package org.m2acsi.control;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -20,6 +21,7 @@ import org.m2acsi.entities.Utilisateur;
 @RequestScoped
 public class NouveauUtilisateur {
     
+    @EJB
     @Inject
     private UtilisateurEJB utilisateurEJB;
     

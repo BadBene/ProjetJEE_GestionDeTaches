@@ -20,22 +20,21 @@ public class Utilisateur implements Serializable{
     /**
      * identifiant de l'utilisateur auto-incremente
      */
-    @Id
-    @GeneratedValue
+    @Id @GeneratedValue
     private Long id;
 
     /**
      * login de l'utilisateur
      */
-    @Column(nullable = false, insertable = false)
-    @Size(min = 5, max = 20, message = "Login non conforme !")
+//    @Column(nullable = false)
+//    @Size(min = 5, max = 20, message = "Login non conforme !")
     private String login;
 
     /**
      * mot de passe de l'utilisateur
      */
-    @Column(nullable = false)
-    @Size(min = 5, max = 20, message = "Mot de passe non conforme !")
+//    @Column(nullable = false)
+//    @Size(min = 5, max = 20, message = "Mot de passe non conforme !")
     private String motDePasse;
 
     /**
@@ -48,20 +47,20 @@ public class Utilisateur implements Serializable{
     /**
      * nom de l'utilisateur
      */
-    @Size(min = 1, max = 20, message = "Nom vide !")
+//    @Size(min = 1, max = 20, message = "Nom vide !")
     private String nom;
 
     /**
      * prenom de l'utilisateur
      */
-    @Size(min = 1, max = 20, message = "Prenom vide !")
+//    @Size(min = 1, max = 20, message = "Prenom vide !")
     private String prenom;
 
     /**
      * email de l'utilisateur
      * ! ! expression reguliere du format du mail
      */
-    @Size(min = 6, max = 50, message = "Email non conforme !")
+//    @Size(min = 6, max = 50, message = "Email non conforme !")
     private String email;
     
     /**
@@ -73,15 +72,14 @@ public class Utilisateur implements Serializable{
     public Utilisateur() {
     }
 
-    public Utilisateur(Long id, String login, String motDePasse, String nom, String prenom, String email) {
-        this.id = id;
-        this.login = login;
-        this.motDePasse = motDePasse;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.email = email;
-//        this.dateCreation = new Date(System.currentTimeMillis());         
-    }    
+//    public Utilisateur(String login, String motDePasse, String nom, String prenom, String email) {
+//        this.login = login;
+//        this.motDePasse = motDePasse;
+//        this.nom = nom;
+//        this.prenom = prenom;
+//        this.email = email;
+////        this.dateCreation = new Date(System.currentTimeMillis());         
+//    }    
 
     public long getId() {
         return id;
@@ -138,6 +136,10 @@ public class Utilisateur implements Serializable{
 //    public void setDateCreation(Date dateCreation) {
 //        this.dateCreation = dateCreation;
 //    }
+    @Override
+    public String toString() {
+        return "Utilisateur{" + "id=" + id + ", login=" + login + ", motDePasse=" + motDePasse + ", nom=" + nom + ", prenom=" + prenom + ", email=" + email + '}';
+    }
 
     
 }
