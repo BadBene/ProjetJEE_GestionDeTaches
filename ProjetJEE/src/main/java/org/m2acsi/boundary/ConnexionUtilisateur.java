@@ -16,6 +16,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.m2acsi.entities.Utilisateur;
 
@@ -77,7 +78,10 @@ public class ConnexionUtilisateur implements Serializable{
         Root<Utilisateur> utilisateur = q.from(Utilisateur.class);
         q.select(utilisateur);
         
-        q.where(cb.like(utilisateur.<String>get("login"), utilisateur.<String>get("motDePasse")));
+        Predicate andClause = cb.and(cb.equal(utilisateur.<String>get("login"), login), cb.equal(utilisateur.<String>get("motDePasse"), motDePasse));
+        
+        
+        q.where(andClause);
         
         
         return em.createQuery(q).getResultList();
@@ -87,6 +91,7 @@ public class ConnexionUtilisateur implements Serializable{
         if(1 == requeteConnexion().size()){
             isLoggedIn = true;
             System.out.println("AaaaaaaAaaaaaaaaaAaaaaaaAaaa!!!!!!!!!!!!!!!!!!!!!!!!!");
+            FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("Connecte"));
         }else{
             FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("Erreur connexion"));
 
