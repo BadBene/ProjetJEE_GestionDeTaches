@@ -8,7 +8,7 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
     <head>
-        <title>Connexion</title>
+        <title>Connexion Utilisateur</title>
         <meta name="viewport" content="width=device-width"/>
     </head>
     <body>
@@ -22,5 +22,8 @@ and open the template in the editor.
             </h:panelGrid>
             <h:commandButton value="Connexion !" action="#{connexionUtilisateur.verificationConnexion()}"/>          
         </h:form>
+        <h:link value="creer un compte" outcome="nouveauUtilisateur.xhtml"/>
+<!--        on peut mettre un f:param pour faire passer un parametre a une autre page
+        le mettre entre le link-->
     </body>
 </html>
