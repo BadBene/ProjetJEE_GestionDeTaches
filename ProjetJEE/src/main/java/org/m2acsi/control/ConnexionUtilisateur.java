@@ -87,15 +87,17 @@ public class ConnexionUtilisateur implements Serializable{
         return em.createQuery(q).getResultList();
     }
     
-    public void verificationConnexion(){
+    public String verificationConnexion(){
+        String redirection;
         if(1 == requeteConnexion().size()){
             isLoggedIn = true;
-            System.out.println("AaaaaaaAaaaaaaaaaAaaaaaaAaaa!!!!!!!!!!!!!!!!!!!!!!!!!");
             FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("Connecte"));
+            redirection =  "index.html?faces-redirect=true";
         }else{
             FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("Erreur connexion"));
-
+            redirection =  "connexion.xhtml?faces-redirect=true";
         }
+        return redirection;
     }
     
 }
