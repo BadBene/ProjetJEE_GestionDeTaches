@@ -18,7 +18,7 @@ and open the template in the editor.
                 <h:outputLabel value="Login"/>
                 <h:inputText value="#{connexionUtilisateur.login}"/>
                 <h:outputLabel value="Mot de passe"/>
-                <h:inputText value="#{connexionUtilisateur.motDePasse}"/>
+                <h:inputSecret value="#{connexionUtilisateur.motDePasse}"/>
             </h:panelGrid>
             <h:commandButton value="Connexion !" action="#{connexionUtilisateur.verificationConnexion()}"/>          
         </h:form>

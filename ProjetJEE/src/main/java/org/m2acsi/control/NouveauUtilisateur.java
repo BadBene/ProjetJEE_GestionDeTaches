@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.m2acsi.boundary.UtilisateurEJB;
 import org.m2acsi.entities.Utilisateur;
+import org.m2acsi.util.Encryptage;
 
 /**
  *
@@ -47,7 +48,13 @@ public class NouveauUtilisateur {
     }
     
     public String ajouterUtilisateur(){
+        utilisateur.setMotDePasse(Encryptage.MD5(utilisateur.getMotDePasse()));
         utilisateur = utilisateurEJB.creerUtilisateur(utilisateur);
         return "nouveauUtilisateur.xhtml?faces-redirect=true";
     }
+    
+//    public String modifierUtilisateur(){
+//        utilisateur = utilisateurEJB.modifierUtilisateur(utilisateur);
+//        return "nouveauUtilisateur.xhtml?faces-redirect=true";
+//    }
 }

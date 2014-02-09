@@ -26,4 +26,9 @@ public class UtilisateurEJB {
         em.persist(utilisateur);
         return utilisateur;
     }
+    
+    public Utilisateur modifierUtilisateur(Utilisateur utilisateur){
+        em.merge(utilisateur);
+        return utilisateur;
+    }
 }

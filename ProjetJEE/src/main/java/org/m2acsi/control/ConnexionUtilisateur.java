@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package org.m2acsi.boundary;
+package org.m2acsi.control;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,13 +19,13 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.m2acsi.entities.Utilisateur;
+import org.m2acsi.util.Encryptage;
 
 /**
  *
  * @author LoLo
  */
 @Named("connexionUtilisateur")
-//@Stateless
 @SessionScoped
 public class ConnexionUtilisateur implements Serializable{
     @PersistenceContext(unitName="com.mycompany_ProjetJEE_war_1.0-SNAPSHOTPU")
@@ -77,7 +77,7 @@ public class ConnexionUtilisateur implements Serializable{
         CriteriaQuery<Utilisateur> q = cb.createQuery(Utilisateur.class);
         Root<Utilisateur> utilisateur = q.from(Utilisateur.class);
         q.select(utilisateur);
-        
+        motDePasse = Encryptage.MD5(motDePasse);
         Predicate andClause = cb.and(cb.equal(utilisateur.<String>get("login"), login), cb.equal(utilisateur.<String>get("motDePasse"), motDePasse));
         
         
