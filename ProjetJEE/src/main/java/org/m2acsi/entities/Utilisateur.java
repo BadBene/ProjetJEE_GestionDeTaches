@@ -1,11 +1,11 @@
 package org.m2acsi.entities;
 
 import java.io.Serializable;
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.validation.constraints.Size;
+import javax.persistence.ManyToOne;
 
 /**
  * Classe entite de l'utilisateur
@@ -41,8 +41,8 @@ public class Utilisateur implements Serializable{
      * role de l'utilisateur
      * ! ! voir si garder cascade ! !
      */
-//    @ManyToOne(cascade = CascadeType.PERSIST)
-//    private Role role;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private Role role;
     
     /**
      * nom de l'utilisateur
@@ -72,14 +72,15 @@ public class Utilisateur implements Serializable{
     public Utilisateur() {
     }
 
-//    public Utilisateur(String login, String motDePasse, String nom, String prenom, String email) {
-//        this.login = login;
-//        this.motDePasse = motDePasse;
-//        this.nom = nom;
-//        this.prenom = prenom;
-//        this.email = email;
-////        this.dateCreation = new Date(System.currentTimeMillis());         
-//    }    
+    public Utilisateur(String login, String motDePasse, String nom, String prenom, String email, Role role) {
+        this.login = login;
+        this.motDePasse = motDePasse;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.role = role;
+//        this.dateCreation = new Date(System.currentTimeMillis());         
+    }    
 
     public long getId() {
         return id;
@@ -128,6 +129,16 @@ public class Utilisateur implements Serializable{
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+    
+    
 
 //    public Date getDateCreation() {
 //        return dateCreation;

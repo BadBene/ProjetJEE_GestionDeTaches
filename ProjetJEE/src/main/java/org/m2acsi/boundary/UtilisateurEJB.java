@@ -9,6 +9,10 @@ package org.m2acsi.boundary;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import org.m2acsi.entities.Role;
 import org.m2acsi.entities.Utilisateur;
 
 /**
@@ -22,6 +26,14 @@ public class UtilisateurEJB {
     private EntityManager em;
     
     public Utilisateur creerUtilisateur(Utilisateur utilisateur){
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Role> q = cb.createQuery(Role.class);
+        Root<Role> role = q.from(Role.class);
+        q.select(role);        
+        
+        q.where(cb.equal(role.<String>get("nom"), "Simple"));
+        
+        utilisateur.setRole(em.createQuery(q).getResultList().get(0));
         em.persist(utilisateur);
         return utilisateur;
     }

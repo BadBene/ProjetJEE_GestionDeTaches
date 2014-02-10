@@ -47,8 +47,10 @@ public class NouveauUtilisateur {
         this.utilisateur = utilisateur;
     }
     
+    
     public String ajouterUtilisateur(){
         utilisateur.setMotDePasse(Encryptage.MD5(utilisateur.getMotDePasse()));
+        utilisateur.setRole(null);
         utilisateur = utilisateurEJB.creerUtilisateur(utilisateur);
         return "nouveauUtilisateur.xhtml?faces-redirect=true";
     }
