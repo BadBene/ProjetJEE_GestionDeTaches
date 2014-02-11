@@ -27,6 +27,7 @@ import org.m2acsi.util.Encryptage;
  */
 @Named("connexionUtilisateur")
 @SessionScoped
+//sessionscoped jsf 2
 public class ConnexionUtilisateur implements Serializable{
     @PersistenceContext(unitName="com.mycompany_ProjetJEE_war_1.0-SNAPSHOTPU")
     private EntityManager em;

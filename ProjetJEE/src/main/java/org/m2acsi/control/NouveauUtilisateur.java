@@ -22,7 +22,7 @@ import org.m2acsi.util.Encryptage;
 @RequestScoped
 public class NouveauUtilisateur {
     
-    @EJB
+//    @EJB
     @Inject
     private UtilisateurEJB utilisateurEJB;
     

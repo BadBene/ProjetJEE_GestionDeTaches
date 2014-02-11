@@ -1,0 +1,82 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package org.m2acsi.control;
+
+import java.util.ArrayList;
+import java.util.List;
+import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Named;
+import org.m2acsi.boundary.TacheEJB;
+import org.m2acsi.entities.Tache;
+import org.m2acsi.entities.Utilisateur;
+
+/**
+ *
+ * @author LoLo
+ */
+@Named("nouvelleTaches")
+@RequestScoped
+public class CreerTache {
+    
+    @Inject
+    private TacheEJB tacheEJB;
+    
+    private Utilisateur utilisateur;
+    
+    private Tache tache = new Tache();
+    
+    private List<Tache> listeTaches = new ArrayList<Tache>();
+
+    public CreerTache() {
+    }
+
+    public TacheEJB getTacheEJB() {
+        return tacheEJB;
+    }
+
+    public void setTacheEJB(TacheEJB tacheEJB) {
+        this.tacheEJB = tacheEJB;
+    }
+
+    public Tache getTache() {
+        return tache;
+    }
+
+    public void setTache(Tache tache) {
+        this.tache = tache;
+    }
+
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
+
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
+    }
+
+    public List<Tache> getListeTaches() {
+        return listeTaches;
+    }
+
+    public void setListeTaches(List<Tache> listeTaches) {
+        this.listeTaches = listeTaches;
+    }
+    
+    
+    public void ajouterTache(){
+        tache = tacheEJB.creerTache(tache);
+        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("Tache creee"));
+    }
+    
+    public void afficheTache(){
+        listeTaches = tacheEJB.listeTache(utilisateur);
+    }
+    
+}

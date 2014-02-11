@@ -14,6 +14,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import org.m2acsi.entities.Role;
 import org.m2acsi.entities.Utilisateur;
+import org.m2acsi.util.Constante;
 
 /**
  *
@@ -31,7 +32,7 @@ public class UtilisateurEJB {
         Root<Role> role = q.from(Role.class);
         q.select(role);        
         
-        q.where(cb.equal(role.<String>get("nom"), "Simple"));
+        q.where(cb.equal(role.<String>get("nom"), Constante.ROLE_EDITEUR));
         
         utilisateur.setRole(em.createQuery(q).getResultList().get(0));
         em.persist(utilisateur);
