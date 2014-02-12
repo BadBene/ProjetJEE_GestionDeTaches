@@ -49,6 +49,11 @@ public class Role implements Serializable {
     public void setNom(String nom) {
         this.nom = nom;
     }
+
+    @Override
+    public String toString() {
+        return "Role{" + "id=" + id + ", nom=" + nom + '}';
+    }
     
     
 }

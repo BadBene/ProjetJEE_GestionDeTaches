@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.m2acsi.control;
 
 import java.util.ArrayList;
@@ -24,14 +23,14 @@ import org.m2acsi.entities.Utilisateur;
 @Named("nouvelleTaches")
 @RequestScoped
 public class CreerTache {
-    
+
     @Inject
     private TacheEJB tacheEJB;
-    
+
     private Utilisateur utilisateur;
-    
+
     private Tache tache = new Tache();
-    
+
     private List<Tache> listeTaches = new ArrayList<Tache>();
 
     public CreerTache() {
@@ -68,15 +67,24 @@ public class CreerTache {
     public void setListeTaches(List<Tache> listeTaches) {
         this.listeTaches = listeTaches;
     }
-    
-    
-    public void ajouterTache(){
+
+    public void ajouterTache() {
         tache = tacheEJB.creerTache(tache);
         FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("Tache creee"));
     }
-    
-    public void afficheTache(){
-        listeTaches = tacheEJB.listeTache(utilisateur);
+
+    public List<Tache> afficheTache() {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        ConnexionUtilisateur connexionUtilisateur = (ConnexionUtilisateur) fc.getExternalContext().getSessionMap().get("connexionUtilisateur");
+        if(null == connexionUtilisateur){
+            FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("connexion null"));
+        }
+//        System.out.println("!!!!!!!!!!!!!!!!!!!! "+connexionUtilisateur.getLogin());
+
+        
+//            FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage(""+connexionUtilisateur.getLogin()+" objet "+connexionUtilisateur.getUtilisateur()));
+            listeTaches = tacheEJB.listeTache(connexionUtilisateur.getUtilisateur());
+            return listeTaches;
     }
-    
+
 }

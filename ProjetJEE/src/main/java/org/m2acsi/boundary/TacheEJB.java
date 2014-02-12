@@ -7,6 +7,8 @@ package org.m2acsi.boundary;
 
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -36,8 +38,8 @@ public class TacheEJB {
     public List<Tache> listeTache(Utilisateur utilisateur) {
         //si responsable retourne toute les taches
         //select * from Tache
-
-        if (utilisateur.getRole().getNom().equals(Constante.ROLE_RESPONSABLE)) {
+//        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("" + utilisateur));
+//        if (utilisateur.getRole().getNom().equals(Constante.ROLE_RESPONSABLE)) {
 
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<Tache> q = cb.createQuery(Tache.class);
@@ -45,21 +47,21 @@ public class TacheEJB {
             q.select(tache);
 
             return em.createQuery(q).getResultList();
-        } else {
+//        } else {
             //sinon, select * from Tache_utilisateur where participants-id=utilisateur.id
             //select * from tache t join utilisateur u where u.id = utilisateur.id
 
-            CriteriaBuilder cb = em.getCriteriaBuilder();
-
-            CriteriaQuery<Tache> q = cb.createQuery(Tache.class);
-            Root<Tache> tache = q.from(Tache.class);
-            Join<Tache, Utilisateur> u = tache.join("Utilisateur");
-
-            q.select(tache);
-
-            q.where(cb.equal(tache.<Long>get("id"), utilisateur.getId()));
-            return em.createQuery(q).getResultList();
-
-        }
+//            CriteriaBuilder cb = em.getCriteriaBuilder();
+//
+//            CriteriaQuery<Tache> q = cb.createQuery(Tache.class);
+//            Root<Tache> tache = q.from(Tache.class);
+//            Join<Tache, Utilisateur> u = tache.join("Utilisateur");
+//
+//            q.select(tache);
+//
+//            q.where(cb.equal(tache.<Long>get("id"), utilisateur.getId()));
+//            return em.createQuery(q).getResultList();
+//
+//        }
     }
 }

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.m2acsi.control;
 
 import java.io.Serializable;
@@ -28,17 +27,27 @@ import org.m2acsi.util.Encryptage;
 @Named("connexionUtilisateur")
 @SessionScoped
 //sessionscoped jsf 2
-public class ConnexionUtilisateur implements Serializable{
-    @PersistenceContext(unitName="com.mycompany_ProjetJEE_war_1.0-SNAPSHOTPU")
+public class ConnexionUtilisateur implements Serializable {
+
+    @PersistenceContext(unitName = "com.mycompany_ProjetJEE_war_1.0-SNAPSHOTPU")
     private EntityManager em;
-    
+
     private String login = "";
     private String motDePasse = "";
-    
+    private Utilisateur utilisateur;
+
     private boolean isLoggedIn;
     private boolean isRedirect;
 
     public ConnexionUtilisateur() {
+    }
+
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
+
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
     }
 
     public String getLogin() {
@@ -72,33 +81,37 @@ public class ConnexionUtilisateur implements Serializable{
     public void setIsRedirect(boolean isRedirect) {
         this.isRedirect = isRedirect;
     }
-    
-    public List<Utilisateur> requeteConnexion(){
+
+    public List<Utilisateur> requeteConnexion() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Utilisateur> q = cb.createQuery(Utilisateur.class);
         Root<Utilisateur> utilisateur = q.from(Utilisateur.class);
         q.select(utilisateur);
         motDePasse = Encryptage.MD5(motDePasse);
         Predicate andClause = cb.and(cb.equal(utilisateur.<String>get("login"), login), cb.equal(utilisateur.<String>get("motDePasse"), motDePasse));
-        
-        
+
         q.where(andClause);
-        
-        
+        if(1 == em.createQuery(q).getResultList().size()){
+            this.utilisateur =  em.createQuery(q).getResultList().get(0);
+        }
+        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("" + em.createQuery(q).getResultList().get(0).getRole()));
+
         return em.createQuery(q).getResultList();
     }
-    
-    public String verificationConnexion(){
+
+    public String verificationConnexion() {
         String redirection;
-        if(1 == requeteConnexion().size()){
+        if (1 == requeteConnexion().size()) {
+
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("connexionUtilisateur", this);
             isLoggedIn = true;
             FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("Connecte"));
-            redirection =  "index.html?faces-redirect=true";
-        }else{
+            redirection = "listeTaches.xhtml?faces-redirect=true";
+        } else {
             FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("Erreur connexion"));
-            redirection =  "connexion.xhtml?faces-redirect=true";
+            redirection = "connexion.xhtml?faces-redirect=true";
         }
         return redirection;
     }
-    
+
 }

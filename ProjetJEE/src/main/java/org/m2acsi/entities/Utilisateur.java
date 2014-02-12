@@ -147,10 +147,12 @@ public class Utilisateur implements Serializable{
 //    public void setDateCreation(Date dateCreation) {
 //        this.dateCreation = dateCreation;
 //    }
+
     @Override
     public String toString() {
-        return "Utilisateur{" + "id=" + id + ", login=" + login + ", motDePasse=" + motDePasse + ", nom=" + nom + ", prenom=" + prenom + ", email=" + email + '}';
+        return "Utilisateur{" + "id=" + id + ", login=" + login + ", motDePasse=" + motDePasse + ", role=" + role + ", nom=" + nom + ", prenom=" + prenom + ", email=" + email + '}';
     }
+    
 
     
 }
