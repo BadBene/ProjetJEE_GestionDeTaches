@@ -37,19 +37,33 @@ public class TacheEJB {
 
     public List<Tache> listeTache(Utilisateur utilisateur) {
         //si responsable retourne toute les taches
-        //select * from Tache
+
 //        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("" + utilisateur));
 //        if (utilisateur.getRole().getNom().equals(Constante.ROLE_RESPONSABLE)) {
+        //select * from tache t Natural Join utilisateur u where t.responsable = u.id
+        
+        
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Tache> q = cb.createQuery(Tache.class);
+        Root<Tache> tache = q.from(Tache.class);
+        
+        q.select(tache);
+        
+        q.where(cb.equal(tache.<Utilisateur>get("responsable"), utilisateur));
+        return em.createQuery(q).getResultList();
 
-            CriteriaBuilder cb = em.getCriteriaBuilder();
-            CriteriaQuery<Tache> q = cb.createQuery(Tache.class);
-            Root<Tache> tache = q.from(Tache.class);
-            q.select(tache);
-
-            return em.createQuery(q).getResultList();
+        //select * from Tache
+//        CriteriaBuilder cb = em.getCriteriaBuilder();
+//        CriteriaQuery<Tache> q = cb.createQuery(Tache.class);
+//        Root<Tache> tache = q.from(Tache.class);
+//        q.select(tache);
+//
+//        return em.createQuery(q).getResultList();
+        
+        
 //        } else {
-            //sinon, select * from Tache_utilisateur where participants-id=utilisateur.id
-            //select * from tache t join utilisateur u where u.id = utilisateur.id
+        //sinon, select * from Tache_utilisateur where participants-id=utilisateur.id
+        //select * from tache t join utilisateur u where u.id = utilisateur.id
 
 //            CriteriaBuilder cb = em.getCriteriaBuilder();
 //
@@ -63,5 +77,9 @@ public class TacheEJB {
 //            return em.createQuery(q).getResultList();
 //
 //        }
+    }
+
+    public Tache findTache(long id) {
+        return em.find(Tache.class, id);
     }
 }

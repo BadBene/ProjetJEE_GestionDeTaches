@@ -27,11 +27,11 @@ public class CreerTache {
     @Inject
     private TacheEJB tacheEJB;
 
-    private Utilisateur utilisateur;
+    private Utilisateur utilisateur = (Utilisateur) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("connexionUtilisateur");
 
     private Tache tache = new Tache();
 
-    private List<Tache> listeTaches = new ArrayList<Tache>();
+    private List<Tache> listeTaches;
 
     public CreerTache() {
     }
@@ -61,6 +61,11 @@ public class CreerTache {
     }
 
     public List<Tache> getListeTaches() {
+        if(null == listeTaches){
+            listeTaches = tacheEJB.listeTache(utilisateur);
+//        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("taille ? "+listeTaches.size()+" element "+listeTaches.get(0)));
+        }
+        
         return listeTaches;
     }
 
@@ -74,16 +79,17 @@ public class CreerTache {
     }
 
     public List<Tache> afficheTache() {
-        FacesContext fc = FacesContext.getCurrentInstance();
-        ConnexionUtilisateur connexionUtilisateur = (ConnexionUtilisateur) fc.getExternalContext().getSessionMap().get("connexionUtilisateur");
-        if(null == connexionUtilisateur){
-            FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("connexion null"));
-        }
+//        FacesContext fc = FacesContext.getCurrentInstance();
+//        ConnexionUtilisateur connexionUtilisateur = (ConnexionUtilisateur) fc.getExternalContext().getSessionMap().get("connexionUtilisateur");
+//        if(null == connexionUtilisateur){
+//            FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("connexion null"));
+//        }
 //        System.out.println("!!!!!!!!!!!!!!!!!!!! "+connexionUtilisateur.getLogin());
 
         
 //            FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage(""+connexionUtilisateur.getLogin()+" objet "+connexionUtilisateur.getUtilisateur()));
-            listeTaches = tacheEJB.listeTache(connexionUtilisateur.getUtilisateur());
+//            listeTaches = tacheEJB.listeTache(connexionUtilisateur.getUtilisateur());
+        listeTaches = tacheEJB.listeTache(null);
             return listeTaches;
     }
 

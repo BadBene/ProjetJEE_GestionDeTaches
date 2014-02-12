@@ -8,12 +8,14 @@
     </h:head>
     <h:body>
         
-        <h:dataTable value="#{nouvelleTaches.afficheTache()}" var="tache" >
+        
+        <h:dataTable value="#{nouvelleTaches.listeTaches}" var="tache" id="tache">
             <f:facet name="header">
                         Nom
             </f:facet>
-            <h:outputText value="#{tache.nom}" />
-            
+            <h:column>
+                #{tache.nom}
+            </h:column>
         </h:dataTable>
     </h:body>
 </html>

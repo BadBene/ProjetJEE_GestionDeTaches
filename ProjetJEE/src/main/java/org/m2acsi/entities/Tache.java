@@ -129,6 +129,11 @@ public class Tache implements Serializable {
     public void setParticipants(List<Utilisateur> participants) {
         this.participants = participants;
     }
+
+    @Override
+    public String toString() {
+        return "Tache{" + "id=" + id + ", nom=" + nom + ", description=" + description + ", echeance=" + echeance + ", responsable=" + responsable + ", participants=" + participants + '}';
+    }
     
     
 }

@@ -103,7 +103,7 @@ public class ConnexionUtilisateur implements Serializable {
         String redirection;
         if (1 == requeteConnexion().size()) {
 
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("connexionUtilisateur", this);
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("connexionUtilisateur", utilisateur);
             isLoggedIn = true;
             FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("Connecte"));
             redirection = "listeTaches.xhtml?faces-redirect=true";
