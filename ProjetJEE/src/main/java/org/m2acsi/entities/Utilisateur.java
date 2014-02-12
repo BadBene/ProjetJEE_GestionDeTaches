@@ -41,7 +41,7 @@ public class Utilisateur implements Serializable{
      * role de l'utilisateur
      * ! ! voir si garder cascade ! !
      */
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     private Role role;
     
     /**

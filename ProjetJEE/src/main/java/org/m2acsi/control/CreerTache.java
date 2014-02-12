@@ -5,6 +5,7 @@
  */
 package org.m2acsi.control;
 
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
@@ -30,6 +31,7 @@ public class CreerTache {
     private Utilisateur utilisateur = (Utilisateur) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("connexionUtilisateur");
 
     private Tache tache = new Tache();
+    private Date echeance;
 
     private List<Tache> listeTaches;
 
@@ -60,12 +62,20 @@ public class CreerTache {
         this.utilisateur = utilisateur;
     }
 
+    public Date getEcheance() {
+        return echeance;
+    }
+
+    public void setEcheance(Date echeance) {
+        this.echeance = echeance;
+    }
+
     public List<Tache> getListeTaches() {
-        if(null == listeTaches){
+        if (null == listeTaches) {
             listeTaches = tacheEJB.listeTache(utilisateur);
 //        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("taille ? "+listeTaches.size()+" element "+listeTaches.get(0)));
         }
-        
+
         return listeTaches;
     }
 
@@ -74,6 +84,8 @@ public class CreerTache {
     }
 
     public void ajouterTache() {
+        tache.setResponsable(utilisateur);
+//        tache.setEcheance(echeance);
         tache = tacheEJB.creerTache(tache);
         FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("Tache creee"));
     }
@@ -86,11 +98,10 @@ public class CreerTache {
 //        }
 //        System.out.println("!!!!!!!!!!!!!!!!!!!! "+connexionUtilisateur.getLogin());
 
-        
 //            FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage(""+connexionUtilisateur.getLogin()+" objet "+connexionUtilisateur.getUtilisateur()));
 //            listeTaches = tacheEJB.listeTache(connexionUtilisateur.getUtilisateur());
         listeTaches = tacheEJB.listeTache(null);
-            return listeTaches;
+        return listeTaches;
     }
 
 }

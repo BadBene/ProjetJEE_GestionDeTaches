@@ -94,7 +94,6 @@ public class ConnexionUtilisateur implements Serializable {
         if(1 == em.createQuery(q).getResultList().size()){
             this.utilisateur =  em.createQuery(q).getResultList().get(0);
         }
-        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("" + em.createQuery(q).getResultList().get(0).getRole()));
 
         return em.createQuery(q).getResultList();
     }
@@ -106,7 +105,8 @@ public class ConnexionUtilisateur implements Serializable {
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("connexionUtilisateur", utilisateur);
             isLoggedIn = true;
             FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("Connecte"));
-            redirection = "listeTaches.xhtml?faces-redirect=true";
+//            redirection = "listeTaches.xhtml?faces-redirect=true";
+            redirection = "nouvelleTache.xhtml?faces-redirect=true";
         } else {
             FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("Erreur connexion"));
             redirection = "connexion.xhtml?faces-redirect=true";

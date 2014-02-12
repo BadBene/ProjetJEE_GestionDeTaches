@@ -1,16 +1,14 @@
 package org.m2acsi.entities;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.Size;
+import javax.persistence.Temporal;
 
 /**
  * Classe entite de la tache
@@ -32,26 +30,27 @@ public class Tache implements Serializable {
     /**
      * nom de la tache
      */
-    @Column(nullable = false)
-    @Size(min = 5, max = 20, message = "Nom non conforme !")
+//    @Column(nullable = false)
+//    @Size(min = 5, max = 20, message = "Nom non conforme !")
     private String nom;
     
     /**
      * description de la tache
      */
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String description;
     
     /**
      * date de l'echeance de la tache
      */
-    @Column(nullable = false)
+//    @Column(nullable = false)
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date echeance;
     
     /**
      * responsable de la tache
      */
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     private Utilisateur responsable;
 
     /**
@@ -80,6 +79,7 @@ public class Tache implements Serializable {
         this.description = description;
         this.responsable = responsable;
         this.participants = participants;
+        
     }
 
     public Long getId() {
