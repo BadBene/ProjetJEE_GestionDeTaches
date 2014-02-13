@@ -6,7 +6,6 @@
 package org.m2acsi.control;
 
 import java.util.Date;
-import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -14,6 +13,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.m2acsi.boundary.TacheEJB;
+import org.m2acsi.boundary.UtilisateurEJB;
 import org.m2acsi.entities.Tache;
 import org.m2acsi.entities.Utilisateur;
 
@@ -28,6 +28,9 @@ public class CreerTache {
     @Inject
     private TacheEJB tacheEJB;
 
+    @Inject
+    private UtilisateurEJB utilisateurEJB;
+
     private Utilisateur utilisateur = (Utilisateur) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("connexionUtilisateur");
 
     private Tache tache = new Tache();
@@ -35,11 +38,21 @@ public class CreerTache {
 
     private List<Tache> listeTaches;
 
+    private List<Utilisateur> listeUtilisateurs;
+
     public CreerTache() {
     }
 
     public TacheEJB getTacheEJB() {
         return tacheEJB;
+    }
+
+    public UtilisateurEJB getUtilisateurEJB() {
+        return utilisateurEJB;
+    }
+
+    public void setUtilisateurEJB(UtilisateurEJB utilisateurEJB) {
+        this.utilisateurEJB = utilisateurEJB;
     }
 
     public void setTacheEJB(TacheEJB tacheEJB) {
@@ -81,6 +94,26 @@ public class CreerTache {
 
     public void setListeTaches(List<Tache> listeTaches) {
         this.listeTaches = listeTaches;
+    }
+
+    public List<Utilisateur> getListeUtilisateurs() {
+        if (null == listeUtilisateurs) {
+            listeUtilisateurs = utilisateurEJB.listeUtilisateur();
+            for (int i=0 ; i<listeUtilisateurs.size() ; i++) {
+                Utilisateur utili = listeUtilisateurs.get(i);
+                 FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("Bloucle"));
+                if(utili.getId() == this.utilisateur.getId()){
+                    
+                 FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("suppression"));
+                    listeUtilisateurs.remove(i);
+                }
+            }
+        }
+        return listeUtilisateurs;
+    }
+
+    public void setListeUtilisateurs(List<Utilisateur> listeUtilisateurs) {
+        this.listeUtilisateurs = listeUtilisateurs;
     }
 
     public void ajouterTache() {

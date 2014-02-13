@@ -7,7 +7,7 @@
         <title>Creer une Tache</title>
     </h:head>
     <h:body>
-         <h:form>
+        <h:form>
             <h:panelGrid columns="2">
                 <h:outputLabel value="Nom"/>
                 <h:inputText value="#{nouvelleTaches.tache.nom}"/>
@@ -18,14 +18,29 @@
                     <f:convertDateTime pattern="yyyy-MM-dd"/>
                 </h:inputText>
                 <h:outputLabel value="responsable de la tache"/>
-                
+
+                <h:selectManyCheckbox value="#{nouvelleTaches.listeUtilisateurs}" >
+                    <f:selectItems value="truc"/>
+                </h:selectManyCheckbox>
+
                 <h:outputLabel value="Participants"/>
-                
+                <h:dataTable value="#{nouvelleTaches.listeUtilisateurs}" var="utilisateur" id="utilisateur">
+                    <f:facet name="header">
+                        Nom
+                    </f:facet>
+                    <h:column>
+
+                        #{utilisateur.login}
+
+                    </h:column>
+
+                </h:dataTable>
+
             </h:panelGrid>
-             <h:commandButton value="Creer la tache" action="#{nouvelleTaches.ajouterTache}"/>          
+            <h:commandButton value="Creer la tache" action="#{nouvelleTaches.ajouterTache}"/>          
         </h:form>
-        
-        
+
+
     </h:body>
 </html>
 
