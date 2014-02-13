@@ -8,25 +8,27 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <head>
+    <h:head>
         <title>Connexion Utilisateur</title>
         <meta name="viewport" content="width=device-width"/>
-    </head>
-    <body>
-        <h1>Connexion</h1>
-        <h:form>
-         <h:panelGrid columns="2">
-                <h:outputLabel value="Login"/>
-                <h:inputText value="#{connexionUtilisateur.login}"/>
+        <h:outputStylesheet name="ressources/css/bootstrap.min.css"/>
+        <link href="ressources/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+    </h:head>
+    <h:body style="width: 250px; margin: 100px auto;background-color: #eee;">
+        <h:panelGroup layout="block">
+            <h2 class="form-signin-heading">Connexion</h2>
+            <h:form>
+                <h:outputLabel value="Login" class="text-center"/>
+                <h:inputText value="#{connexionUtilisateur.login}" class="form-control" />
                 <h:outputLabel value="Mot de passe"/>
-                <h:inputSecret value="#{connexionUtilisateur.motDePasse}"/>
-            </h:panelGrid>
-            <h:commandButton value="Connexion !" action="#{connexionUtilisateur.verificationConnexion()}">    
-                <f:param name="pid" value="1"/>
-            </h:commandButton>
-        </h:form>
-        <h:link value="creer un compte" outcome="nouveauUtilisateur.xhtml"/>
-<!--        on peut mettre un f:param pour faire passer un parametre a une autre page
-        le mettre entre le link-->
-    </body>
+                <h:inputSecret value="#{connexionUtilisateur.motDePasse}" class="form-control"/>
+                <h:commandButton value="Connexion !" action="#{connexionUtilisateur.verificationConnexion()}" class="btn btn-lg btn-primary btn-block">    
+                    <f:param name="pid" value="1"/>
+                </h:commandButton>
+            </h:form>
+            <h:link value="créer un compte" outcome="nouveauUtilisateur.xhtml"/>
+            <!--        on peut mettre un f:param pour faire passer un parametre a une autre page
+                    le mettre entre le link-->
+        </h:panelGroup>
+    </h:body>
 </html>
