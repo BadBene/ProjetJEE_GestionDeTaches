@@ -17,24 +17,18 @@
                 <h:inputText value="#{nouvelleTaches.tache.echeance}">
                     <f:convertDateTime pattern="yyyy-MM-dd"/>
                 </h:inputText>
-                <h:outputLabel value="responsable de la tache"/>
+                <h:outputLabel value="responsable de la tache :"/>
+                <h:outputLabel value="#{nouvelleTaches.utilisateur.login}"/>
 
-                <h:selectManyCheckbox value="#{nouvelleTaches.listeUtilisateurs}" >
-                    <f:selectItems value="truc"/>
-                </h:selectManyCheckbox>
 
                 <h:outputLabel value="Participants"/>
-                <h:dataTable value="#{nouvelleTaches.listeUtilisateurs}" var="utilisateur" id="utilisateur">
-                    <f:facet name="header">
-                        Nom
-                    </f:facet>
-                    <h:column>
 
-                        #{utilisateur.login}
+                <h:selectManyCheckbox value="#{nouvelleTaches.listeParticipants}" >
+                    <f:selectItems value="#{nouvelleTaches.listeUtilisateurs}" var="u" itemLabel="#{u.login}" itemValue="#{u}"/>
+                    <br/>
+                </h:selectManyCheckbox>
 
-                    </h:column>
 
-                </h:dataTable>
 
             </h:panelGrid>
             <h:commandButton value="Creer la tache" action="#{nouvelleTaches.ajouterTache}"/>          

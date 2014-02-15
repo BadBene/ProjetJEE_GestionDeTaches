@@ -40,7 +40,17 @@ public class CreerTache {
 
     private List<Utilisateur> listeUtilisateurs;
 
+    private List<Utilisateur> listeParticipants;
+
     public CreerTache() {
+    }
+
+    public List<Utilisateur> getListeParticipants() {
+        return listeParticipants;
+    }
+
+    public void setListeParticipants(List<Utilisateur> listeParticipants) {
+        this.listeParticipants = listeParticipants;
     }
 
     public TacheEJB getTacheEJB() {
@@ -99,12 +109,12 @@ public class CreerTache {
     public List<Utilisateur> getListeUtilisateurs() {
         if (null == listeUtilisateurs) {
             listeUtilisateurs = utilisateurEJB.listeUtilisateur();
-            for (int i=0 ; i<listeUtilisateurs.size() ; i++) {
+            for (int i = 0; i < listeUtilisateurs.size(); i++) {
                 Utilisateur utili = listeUtilisateurs.get(i);
-                 FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("Bloucle"));
-                if(utili.getId() == this.utilisateur.getId()){
-                    
-                 FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("suppression"));
+                FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("Bloucle"));
+                if (utili.getId() == this.utilisateur.getId()) {
+
+                    FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("suppression"));
                     listeUtilisateurs.remove(i);
                 }
             }
@@ -117,8 +127,11 @@ public class CreerTache {
     }
 
     public void ajouterTache() {
+//        tache.setParticipants(listeParticipants);
         tache.setResponsable(utilisateur);
 //        tache.setEcheance(echeance);
+        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("Taille : " + listeParticipants.get(0)));
+        
         tache = tacheEJB.creerTache(tache);
         FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("Tache creee"));
     }
