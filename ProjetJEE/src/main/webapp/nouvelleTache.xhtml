@@ -24,7 +24,8 @@
                 <h:outputLabel value="Participants"/>
 
                 <h:selectManyCheckbox value="#{nouvelleTaches.listeParticipants}" >
-                    <f:selectItems value="#{nouvelleTaches.listeUtilisateurs}" var="u" itemLabel="#{u.login}" itemValue="#{u}"/>
+                    <f:selectItems value="#{nouvelleTaches.listeUtilisateurs}" var="u" itemLabel="#{u.login}" itemValue="#{u.id}"/>
+                    <f:converter converterId="javax.faces.Long"/>
                     <br/>
                 </h:selectManyCheckbox>
 

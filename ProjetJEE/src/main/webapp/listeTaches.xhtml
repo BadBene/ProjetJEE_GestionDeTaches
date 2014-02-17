@@ -14,7 +14,11 @@
                         Nom
             </f:facet>
             <h:column>
-                #{tache.nom}
+            <h:form>
+                <h:commandLink value="#{tache.nom}" action="affichageTache.xhtml">
+                <f:setPropertyActionListener target="#{nouvelleTaches.pid}" value="#{tache.id}" />
+                </h:commandLink>
+            </h:form>
             </h:column>
         </h:dataTable>
     </h:body>

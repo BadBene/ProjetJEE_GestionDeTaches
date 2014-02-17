@@ -1,10 +1,12 @@
 package org.m2acsi.entities;
 
 import java.io.Serializable;
-import javax.persistence.CascadeType;
+import java.util.List;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 /**
@@ -61,7 +63,11 @@ public class Utilisateur implements Serializable{
      * ! ! expression reguliere du format du mail
      */
 //    @Size(min = 6, max = 50, message = "Email non conforme !")
+    //^[a-Z]+@
     private String email;
+    
+    @ManyToMany
+    private List<Tache> listeDeParticipation;
     
     /**
      * date de creation du compte de l'utilisateur
@@ -82,12 +88,20 @@ public class Utilisateur implements Serializable{
 //        this.dateCreation = new Date(System.currentTimeMillis());         
     }    
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<Tache> getListeDeParticipation() {
+        return listeDeParticipation;
+    }
+
+    public void setListeDeParticipation(List<Tache> listeDeParticipation) {
+        this.listeDeParticipation = listeDeParticipation;
     }
 
     public String getLogin() {
@@ -137,8 +151,6 @@ public class Utilisateur implements Serializable{
     public void setRole(Role role) {
         this.role = role;
     }
-    
-    
 
 //    public Date getDateCreation() {
 //        return dateCreation;
@@ -147,10 +159,61 @@ public class Utilisateur implements Serializable{
 //    public void setDateCreation(Date dateCreation) {
 //        this.dateCreation = dateCreation;
 //    }
+//    @Override
+//    public String toString() {
+//        return "Utilisateur{" + "id=" + id + ", login=" + login + ", motDePasse=" + motDePasse + ", role=" + role + ", nom=" + nom + ", prenom=" + prenom + ", email=" + email + '}';
+//    }
+    
+    public void addTache(Tache tache){
+        listeDeParticipation.add(tache);
+    }
+    
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 23 * hash + Objects.hashCode(this.id);
+        hash = 23 * hash + Objects.hashCode(this.login);
+        hash = 23 * hash + Objects.hashCode(this.motDePasse);
+        hash = 23 * hash + Objects.hashCode(this.role);
+        hash = 23 * hash + Objects.hashCode(this.nom);
+        hash = 23 * hash + Objects.hashCode(this.prenom);
+        hash = 23 * hash + Objects.hashCode(this.email);
+        return hash;
+    }
+    
 
     @Override
-    public String toString() {
-        return "Utilisateur{" + "id=" + id + ", login=" + login + ", motDePasse=" + motDePasse + ", role=" + role + ", nom=" + nom + ", prenom=" + prenom + ", email=" + email + '}';
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Utilisateur other = (Utilisateur) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.login, other.login)) {
+            return false;
+        }
+        if (!Objects.equals(this.motDePasse, other.motDePasse)) {
+            return false;
+        }
+        if (!Objects.equals(this.role, other.role)) {
+            return false;
+        }
+        if (!Objects.equals(this.nom, other.nom)) {
+            return false;
+        }
+        if (!Objects.equals(this.prenom, other.prenom)) {
+            return false;
+        }
+        if (!Objects.equals(this.email, other.email)) {
+            return false;
+        }
+       
+        return true;
     }
     
 

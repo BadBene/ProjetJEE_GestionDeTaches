@@ -3,6 +3,8 @@ package org.m2acsi.entities;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -56,7 +58,7 @@ public class Tache implements Serializable {
     /**
      * utilisateurs participants a la tache
      */
-    @ManyToMany
+    @ManyToMany(mappedBy = "listeDeParticipation")
     private List<Utilisateur> participants;
     
     /**
@@ -129,11 +131,26 @@ public class Tache implements Serializable {
     public void setParticipants(List<Utilisateur> participants) {
         this.participants = participants;
     }
-
-    @Override
-    public String toString() {
-        return "Tache{" + "id=" + id + ", nom=" + nom + ", description=" + description + ", echeance=" + echeance + ", responsable=" + responsable + ", participants=" + participants + '}';
+    
+    public void addParticipant(Long utilisateurID){
+        
+        
+        
+        
+        
+//        if(!participants.contains(utilisateur)){
+//            participants.add(utilisateur);
+//            FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("utili "+utilisateur ));
+//        }
+//        if(!utilisateur.getListeDeParticipation().contains(this)){
+//            utilisateur.getListeDeParticipation().add(this);
+//        }
     }
+
+//    @Override
+//    public String toString() {
+//        return "Tache{" + "id=" + id + ", nom=" + nom + ", description=" + description + ", echeance=" + echeance + ", responsable=" + responsable + ", participants=" + participants + '}';
+//    }
     
     
 }

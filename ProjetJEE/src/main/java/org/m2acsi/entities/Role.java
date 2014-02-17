@@ -1,6 +1,7 @@
 package org.m2acsi.entities;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -50,9 +51,35 @@ public class Role implements Serializable {
         this.nom = nom;
     }
 
+//    @Override
+//    public String toString() {
+//        return "Role{" + "id=" + id + ", nom=" + nom + '}';
+//    }
+
     @Override
-    public String toString() {
-        return "Role{" + "id=" + id + ", nom=" + nom + '}';
+    public int hashCode() {
+        int hash = 7;
+        hash = 79 * hash + Objects.hashCode(this.id);
+        hash = 79 * hash + Objects.hashCode(this.nom);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Role other = (Role) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.nom, other.nom)) {
+            return false;
+        }
+        return true;
     }
     
     

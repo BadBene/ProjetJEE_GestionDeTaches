@@ -7,6 +7,7 @@ package org.m2acsi.control;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -40,16 +41,18 @@ public class CreerTache {
 
     private List<Utilisateur> listeUtilisateurs;
 
-    private List<Utilisateur> listeParticipants;
+    private List<Long> listeParticipants;
+    
+    private Long pid;
 
     public CreerTache() {
     }
 
-    public List<Utilisateur> getListeParticipants() {
+    public List<Long> getListeParticipants() {
         return listeParticipants;
     }
 
-    public void setListeParticipants(List<Utilisateur> listeParticipants) {
+    public void setListeParticipants(List<Long> listeParticipants) {
         this.listeParticipants = listeParticipants;
     }
 
@@ -106,6 +109,18 @@ public class CreerTache {
         this.listeTaches = listeTaches;
     }
 
+    public Long getPid() {
+        return pid;
+    }
+
+    public void setPid(Long pid) {
+        this.pid = pid;
+    }
+
+    
+    
+    
+
     public List<Utilisateur> getListeUtilisateurs() {
         if (null == listeUtilisateurs) {
             listeUtilisateurs = utilisateurEJB.listeUtilisateur();
@@ -130,9 +145,14 @@ public class CreerTache {
 //        tache.setParticipants(listeParticipants);
         tache.setResponsable(utilisateur);
 //        tache.setEcheance(echeance);
+        
+//        for(Utilisateur utili : listeParticipants){
+//            tache.addParticipant(listeParticipants.get(0));
+//        }
+        
         FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("Taille : " + listeParticipants.get(0)));
         
-        tache = tacheEJB.creerTache(tache);
+        tache = tacheEJB.creerTache(tache,listeParticipants);
         FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("Tache creee"));
     }
 
@@ -149,5 +169,65 @@ public class CreerTache {
         listeTaches = tacheEJB.listeTache(null);
         return listeTaches;
     }
+    
+    public Tache detailTache(){
+        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("id tache "+pid));
+        tache = tacheEJB.findTache(pid);
+        return tache;
+//        return null;
+    }
 
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 47 * hash + Objects.hashCode(this.tacheEJB);
+        hash = 47 * hash + Objects.hashCode(this.utilisateurEJB);
+        hash = 47 * hash + Objects.hashCode(this.utilisateur);
+        hash = 47 * hash + Objects.hashCode(this.tache);
+        hash = 47 * hash + Objects.hashCode(this.echeance);
+        hash = 47 * hash + Objects.hashCode(this.listeTaches);
+        hash = 47 * hash + Objects.hashCode(this.listeUtilisateurs);
+        hash = 47 * hash + Objects.hashCode(this.listeParticipants);
+        return hash;
+    }
+
+  
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final CreerTache other = (CreerTache) obj;
+        if (!Objects.equals(this.tacheEJB, other.tacheEJB)) {
+            return false;
+        }
+        if (!Objects.equals(this.utilisateurEJB, other.utilisateurEJB)) {
+            return false;
+        }
+        if (!Objects.equals(this.utilisateur, other.utilisateur)) {
+            return false;
+        }
+        if (!Objects.equals(this.tache, other.tache)) {
+            return false;
+        }
+        if (!Objects.equals(this.echeance, other.echeance)) {
+            return false;
+        }
+        if (!Objects.equals(this.listeTaches, other.listeTaches)) {
+            return false;
+        }
+        if (!Objects.equals(this.listeUtilisateurs, other.listeUtilisateurs)) {
+            return false;
+        }
+        if (!Objects.equals(this.listeParticipants, other.listeParticipants)) {
+            return false;
+        }
+        return true;
+    }
+
+    
 }
