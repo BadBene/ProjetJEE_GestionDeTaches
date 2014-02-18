@@ -171,8 +171,10 @@ public class CreerTache {
     }
     
     public Tache detailTache(){
-        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("id tache "+pid));
+//        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("id tache "+pid));
         tache = tacheEJB.findTache(pid);
+        
+//        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("tache "+tache.getNom()));
         return tache;
 //        return null;
     }
