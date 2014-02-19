@@ -10,6 +10,7 @@ import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,6 +18,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.m2acsi.boundary.UtilisateurEJB;
 import org.m2acsi.entities.Utilisateur;
 import org.m2acsi.util.Encryptage;
 
@@ -36,11 +38,26 @@ public class ConnexionUtilisateur implements Serializable {
     private String motDePasse = "";
     private Utilisateur utilisateur;
 
+    @Inject
+    private UtilisateurEJB utilisateurEJB;
+    
     private boolean isLoggedIn;
     private boolean isRedirect;
+    
+    private Long pid;
 
     public ConnexionUtilisateur() {
     }
+
+    public UtilisateurEJB getUtilisateurEJB() {
+        return utilisateurEJB;
+    }
+
+    public void setUtilisateurEJB(UtilisateurEJB utilisateurEJB) {
+        this.utilisateurEJB = utilisateurEJB;
+    }
+    
+    
 
     public Utilisateur getUtilisateur() {
         return utilisateur;
@@ -82,6 +99,20 @@ public class ConnexionUtilisateur implements Serializable {
         this.isRedirect = isRedirect;
     }
 
+    public Long getPid() {
+        return pid;
+    }
+
+    public void setPid(Long pid) {
+        this.pid = pid;
+    }
+    
+    
+    
+    public Utilisateur retourneUtilisateurConnecte(){
+        return (Utilisateur) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("connexionUtilisateur");
+    }
+
     public List<Utilisateur> requeteConnexion() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Utilisateur> q = cb.createQuery(Utilisateur.class);
@@ -106,7 +137,7 @@ public class ConnexionUtilisateur implements Serializable {
             isLoggedIn = true;
             FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("Connecte"));
 //            redirection = "listeTaches.xhtml?faces-redirect=true";
-            redirection = "nouvelleTache.xhtml?faces-redirect=true";
+            redirection = "accueil.xhtml?faces-redirect=true";
         } else {
             FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("Erreur connexion"));
             redirection = "connexion.xhtml?faces-redirect=true";

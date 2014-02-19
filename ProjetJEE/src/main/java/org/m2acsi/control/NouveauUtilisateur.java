@@ -27,6 +27,8 @@ public class NouveauUtilisateur {
     private UtilisateurEJB utilisateurEJB;
     
     private Utilisateur utilisateur = new Utilisateur();
+    
+    private Long pid;
 
     public NouveauUtilisateur() {
     }
@@ -46,17 +48,35 @@ public class NouveauUtilisateur {
     public void setUtilisateur(Utilisateur utilisateur) {
         this.utilisateur = utilisateur;
     }
+
+    public Long getPid() {
+        return pid;
+    }
+
+    public void setPid(Long pid) {
+        this.pid = pid;
+    }
     
+  
     
     public String ajouterUtilisateur(){
         utilisateur.setMotDePasse(Encryptage.MD5(utilisateur.getMotDePasse()));
         utilisateur.setRole(null);
         utilisateur = utilisateurEJB.creerUtilisateur(utilisateur);
-        return "nouveauUtilisateur.xhtml?faces-redirect=true";
+        return "connexion.xhtml?faces-redirect=true";
     }
     
-//    public String modifierUtilisateur(){
-//        utilisateur = utilisateurEJB.modifierUtilisateur(utilisateur);
-//        return "nouveauUtilisateur.xhtml?faces-redirect=true";
-//    }
+    public String modifierUtilisateur(){
+        Utilisateur utilisateurTMP = utilisateurEJB.findUtilisateur(pid);
+        utilisateur.setId(pid);
+        utilisateur.setMotDePasse(Encryptage.MD5(utilisateur.getMotDePasse()));
+        utilisateur.setRole(utilisateurTMP.getRole());
+        utilisateur = utilisateurEJB.modifierUtilisateur(utilisateur);
+        return "connexion.xhtml?faces-redirect=true";
+    }
+    
+    public Utilisateur detailUtilisateur(){
+        utilisateur = utilisateurEJB.findUtilisateur(pid);
+        return utilisateur;
+    }
 }

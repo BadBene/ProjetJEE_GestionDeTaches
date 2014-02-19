@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Bienvenue #{connexionUtilisateur.utilisateur.login}</title>
+    </h:head>
+    <h:body>
+        <f:metadata>
+            <f:event type="javax.faces.event.PreRenderComponentEvent" listener="#{connexionUtilisateur.retourneUtilisateurConnecte}" />
+        </f:metadata>
+
+
+        <h:panelGrid columns="2">
+
+            <!--liste des taches accessible a l'utilisateur-->
+            <h:dataTable value="#{nouvelleTaches.listeTaches}" var="tache" id="tache">
+                <f:facet name="header">
+                    Tache auquelle vous avez acces
+                </f:facet>
+                <h:column>
+                    <h:form>
+                        <h:commandLink value="#{tache.nom}" action="affichageTache.xhtml">
+                            <f:setPropertyActionListener target="#{nouvelleTaches.pid}" value="#{tache.id}" />
+                        </h:commandLink>
+                    </h:form>
+                </h:column>
+            </h:dataTable>
+
+            <!--modifier son compte utilisateur-->            
+            <h:form>
+                <h:commandLink value="modifier mon compte" action="modifierUtilisateur.xhtml">
+                    <f:setPropertyActionListener target="#{nouveauUtilisateur.pid}" value="#{connexionUtilisateur.utilisateur.id}" />
+                </h:commandLink>
+            </h:form>
+            <!--rendre visible les champs ?-->
+
+            <c:if test="#{connexionUtilisateur.utilisateur.role.id eq 1}">
+                <h:dataTable value="#{nouvelleTaches.listeUtilisateurs}" var="utilisateur" id="utilisateur">
+                    <f:facet name="header">
+                        Modifier les utilisateurs
+                    </f:facet>
+                    <h:column>
+                        <h:link value="#{utilisateur.login}"/>
+                    </h:column>
+                </h:dataTable>
+            </c:if>
+
+        </h:panelGrid>
+
+    </h:body>
+</html>
+

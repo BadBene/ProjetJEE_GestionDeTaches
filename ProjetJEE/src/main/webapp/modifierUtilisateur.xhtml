@@ -5,16 +5,23 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <head>
         <title>Creation Utilisateur</title>
         <meta name="viewport" content="width=device-width"/>
     </head>
     <body>
+        <f:metadata>
+            <f:viewParam name="pid" value="#{nouveauUtilisateur.pid}" />
+            <f:event type="javax.faces.event.PreRenderComponentEvent" listener="#{nouveauUtilisateur.detailUtilisateur}" />
+        </f:metadata>
+        
          <h:form>
             <h:panelGrid columns="2">
                 <h:outputLabel value="Login"/>
-                <h:inputText value="#{nouveauUtilisateur.utilisateur.login}"/>
+                <h:inputText label="#{nouveauUtilisateur.utilisateur.login}" value="#{nouveauUtilisateur.utilisateur.login}"/>
                 <h:outputLabel value="Mot de passe"/>
                 <h:inputText value="#{nouveauUtilisateur.utilisateur.motDePasse}"/>
                 <h:outputLabel value="nom"/>
@@ -23,7 +30,8 @@ and open the template in the editor.
                 <h:inputText value="#{nouveauUtilisateur.utilisateur.prenom}"/>
                 <h:outputLabel value="email"/>
                 <h:inputText value="#{nouveauUtilisateur.utilisateur.email}"/>
-            </h:panelGrid>         
+            </h:panelGrid>  
+             <h:commandButton value="Creer votre compte" action="#{nouveauUtilisateur.modifierUtilisateur}"/>
         </h:form>
        
     </body>

@@ -23,7 +23,7 @@ and open the template in the editor.
                 <h:outputLabel value="Mot de passe"/>
                 <h:inputSecret value="#{connexionUtilisateur.motDePasse}" class="form-control"/>
                 <h:commandButton value="Connexion !" action="#{connexionUtilisateur.verificationConnexion()}" class="btn btn-lg btn-primary btn-block">    
-                    <f:param name="pid" value="1"/>
+                    <f:param name="pid" value="#{connexionUtilisateur.utilisateur.id}"/>
                 </h:commandButton>
             </h:form>
             <h:link value="créer un compte" outcome="nouveauUtilisateur.xhtml"/>
