@@ -43,7 +43,11 @@
                         Modifier les utilisateurs
                     </f:facet>
                     <h:column>
-                        <h:link value="#{utilisateur.login}"/>
+                        <h:form>
+                            <h:commandLink value="#{utilisateur.login}" action="modifierUtilisateur.xhtml">
+                                <f:setPropertyActionListener target="#{nouveauUtilisateur.pid}" value="#{utilisateur.id}" />
+                            </h:commandLink>
+                        </h:form>
                     </h:column>
                 </h:dataTable>
             </c:if>

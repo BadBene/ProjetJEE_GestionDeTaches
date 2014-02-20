@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.m2acsi.boundary;
 
 import java.util.List;
@@ -25,39 +24,58 @@ import org.m2acsi.util.Constante;
  */
 @Stateless
 public class UtilisateurEJB {
-    
-    @PersistenceContext(unitName="com.mycompany_ProjetJEE_war_1.0-SNAPSHOTPU")
+
+    @PersistenceContext(unitName = "com.mycompany_ProjetJEE_war_1.0-SNAPSHOTPU")
     private EntityManager em;
-    
-    public Utilisateur creerUtilisateur(Utilisateur utilisateur){
+
+    public Utilisateur creerUtilisateur(Utilisateur utilisateur) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Role> q = cb.createQuery(Role.class);
         Root<Role> role = q.from(Role.class);
-        q.select(role);        
-        
+        q.select(role);
+
         q.where(cb.equal(role.<String>get("nom"), Constante.ROLE_EDITEUR));
-        
+
         utilisateur.setRole(em.createQuery(q).getResultList().get(0));
         em.persist(utilisateur);
         return utilisateur;
     }
-    
-    public List<Utilisateur> listeUtilisateur(){
+
+    public List<Utilisateur> listeUtilisateur() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Utilisateur> q = cb.createQuery(Utilisateur.class);
         Root<Utilisateur> utilisateur = q.from(Utilisateur.class);
-        
+
         q.select(utilisateur);
-        
+
         return em.createQuery(q).getResultList();
     }
-    
-     public Utilisateur findUtilisateur(long id) {
+
+    public List<Role> listeRole() {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Role> q = cb.createQuery(Role.class);
+        Root<Role> role = q.from(Role.class);
+
+        q.select(role);
+
+        return em.createQuery(q).getResultList();
+    }
+
+    public Utilisateur findUtilisateur(long id) {
         return em.find(Utilisateur.class, id);
     }
-    
-    public Utilisateur modifierUtilisateur(Utilisateur utilisateur){
-        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("id utili "+utilisateur.getId()));
+
+    public Utilisateur modifierUtilisateur(Utilisateur utilisateur, Long role) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Role> q = cb.createQuery(Role.class);
+        Root<Role> ro = q.from(Role.class);
+
+        q.select(ro);
+
+        q.where(cb.equal(ro.<Role>get("id"), role));
+        Role r = (Role)em.createQuery(q).getResultList().get(0);
+        utilisateur.setRole(r);
+        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("id utili " + utilisateur.getId()));
         em.merge(utilisateur);
         return utilisateur;
     }

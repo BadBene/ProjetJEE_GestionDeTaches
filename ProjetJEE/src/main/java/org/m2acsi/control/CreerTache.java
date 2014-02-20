@@ -126,10 +126,10 @@ public class CreerTache {
             listeUtilisateurs = utilisateurEJB.listeUtilisateur();
             for (int i = 0; i < listeUtilisateurs.size(); i++) {
                 Utilisateur utili = listeUtilisateurs.get(i);
-                FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("Bloucle"));
+//                FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("Bloucle"));
                 if (utili.getId() == this.utilisateur.getId()) {
 
-                    FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("suppression"));
+//                    FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("suppression"));
                     listeUtilisateurs.remove(i);
                 }
             }
