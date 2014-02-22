@@ -25,6 +25,12 @@
                         <h:commandLink value="#{tache.nom}" action="affichageTache.xhtml">
                             <f:setPropertyActionListener target="#{nouvelleTaches.pid}" value="#{tache.id}" />
                         </h:commandLink>
+                    <br/>
+                        <c:if test="#{connexionUtilisateur.utilisateur.role.id eq 1}">
+                            <h:commandLink value="     Modifier : #{tache.nom}" action="modifierTache.xhtml">
+                            <f:setPropertyActionListener target="#{nouvelleTaches.pid}" value="#{tache.id}" />
+                        </h:commandLink>
+                        </c:if>
                     </h:form>
                 </h:column>
             </h:dataTable>
@@ -50,6 +56,8 @@
                         </h:form>
                     </h:column>
                 </h:dataTable>
+
+
             </c:if>
 
         </h:panelGrid>

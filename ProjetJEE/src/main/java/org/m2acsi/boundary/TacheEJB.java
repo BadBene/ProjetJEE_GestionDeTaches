@@ -28,7 +28,7 @@ public class TacheEJB {
 
     @PersistenceContext(unitName = "com.mycompany_ProjetJEE_war_1.0-SNAPSHOTPU")
     private EntityManager em;
-    
+
     private Long id;
 
     public Long getId() {
@@ -38,7 +38,7 @@ public class TacheEJB {
     public void setId(Long id) {
         this.id = id;
     }
-    
+
     public Tache creerTache(Tache tache, List<Long> listeParticipants) {
         //select * from Utilisateur where id="$id"
         List<Utilisateur> listeUtili = new ArrayList<Utilisateur>();
@@ -79,20 +79,20 @@ public class TacheEJB {
 
             q.select(tache);
             List<Tache> lTache = em.createQuery(q).getResultList();
-            
+
             List<Tache> lTacheTmp = new ArrayList<Tache>();
-            
-            if(null != lTache){
+
+            if (null != lTache) {
                 for (Tache tache1 : lTache) {
                     for (Utilisateur utili : tache1.getParticipants()) {
-                        if(utili.getId() == utilisateur.getId()){
+                        if (utili.getId() == utilisateur.getId()) {
                             lTacheTmp.add(tache1);
                         }
                     }
                 }
                 FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("editeur"));
                 return lTacheTmp;
-                
+
             }
             FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("pas de taches"));
             //mettre erreur !!
@@ -103,5 +103,22 @@ public class TacheEJB {
 
     public Tache findTache(long id) {
         return em.find(Tache.class, id);
+    }
+
+    public Tache modifierTache(Tache tache) {
+        em.merge(tache);
+        return tache;
+    }
+
+    public List<Utilisateur> listeDeParticipants(Long pid) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Tache> q = cb.createQuery(Tache.class);
+        Root<Tache> tache = q.from(Tache.class);
+
+        q.select(tache);
+        q.where(cb.equal(tache.<Tache>get("id"), pid));
+        
+       Tache t = em.createQuery(q).getResultList().get(0);
+       return t.getParticipants();
     }
 }

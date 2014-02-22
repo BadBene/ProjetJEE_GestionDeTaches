@@ -25,4 +25,8 @@ public class MessageEJB {
         em.persist(message);
         return message;
     }
+    
+    public Message findMessage(Long pid){
+        return em.find(Message.class, pid);
+    }
 }

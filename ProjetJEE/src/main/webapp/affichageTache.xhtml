@@ -13,8 +13,34 @@
             <f:viewParam name="pid" value="#{nouvelleTaches.pid}" />
             <f:event type="javax.faces.event.PreRenderComponentEvent" listener="#{nouvelleTaches.detailTache()}" />
         </f:metadata>
-        <h:outputLabel value="#{nouvelleTaches.tache.nom}"/>
-        <h:outputLabel value="#{nouvelleTaches.tache.description}"/>
+
+        <h:panelGrid columns="2">
+
+            <h:outputLabel value="Nom"/>
+            <h:outputLabel value="#{nouvelleTaches.tache.nom}"/>
+
+            <h:outputLabel value="Description"/>
+            <h:outputLabel value="#{nouvelleTaches.tache.description}"/>
+
+            <h:outputLabel value="Echeance"/>
+            <h:outputLabel value="#{nouvelleTaches.tache.echeance}">
+                <f:convertDateTime pattern="yyyy-MM-dd"/>
+            </h:outputLabel>
+
+            <h:outputLabel value="Responsable"/>
+            <h:outputLabel value="#{nouvelleTaches.tache.responsable.login}"/>
+
+            <h:dataTable value="#{nouvelleTaches.tache.participants}" var="participant" id="participant">
+                <f:facet name="header">
+                    Participants
+                </f:facet>
+                <h:column>
+                    <h:outputLabel value="#{participant.login}"/>
+                </h:column>
+            </h:dataTable>
+            <h:outputLabel value="Timeline"/>
+            <h:outputText value=""/>
+        </h:panelGrid>
     </h:body>
 </html>
 

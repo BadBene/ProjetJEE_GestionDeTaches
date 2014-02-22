@@ -30,6 +30,8 @@ public class CreerMessage {
     
     private Utilisateur utilisateur = (Utilisateur) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("connexionUtilisateur");
 
+    private Long pid;
+    
     public CreerMessage() {
     }
 
@@ -56,13 +58,26 @@ public class CreerMessage {
     public void setMessage(Message message) {
         this.message = message;
     }
+
+    public Long getPid() {
+        return pid;
+    }
+
+    public void setPid(Long pid) {
+        this.pid = pid;
+    }
     
-    
+    public Message detailMessage(){
+        message = messageEJB.findMessage(pid);
+        return message;
+    }
     
     public void ajouterMessage(){
         message.setUtilisateur(utilisateur);
         message.setDateMessage(new Date());
         message = messageEJB.creerMessage(message);
     }
+    
+    
     
 }

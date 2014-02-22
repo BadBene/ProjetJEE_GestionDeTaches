@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Modifier Tache</title>
+        <meta name="viewport" content="width=device-width"/>
+    </h:head>
+    <h:body>
+         <f:metadata>
+             <f:viewParam name="pid" value="#{nouvelleTaches.pid}" />
+             <f:event type="javax.faces.event.PreRenderComponentEvent" listener="#{nouvelleTaches.detailTache}" />
+        </f:metadata>
+         <h:form>
+             <h:panelGrid columns="2">
+                <h:outputLabel value="Nom"/>
+                <h:inputText value="#{nouvelleTaches.tache.nom}"/>
+                <h:outputLabel value="Description"/>
+                <h:inputText value="#{nouvelleTaches.tache.description}"/>
+                <h:outputLabel value="Date d'echeance"/>
+                <h:inputText value="#{nouvelleTaches.tache.echeance}">
+                    <f:convertDateTime pattern="yyyy-MM-dd"/>
+                </h:inputText>
+                <h:outputLabel value="Participants"/>
+                <h:selectManyCheckbox value="#{nouvelleTaches.listeParticipantsActif}" >
+                    <f:selectItems value="#{nouvelleTaches.listeUtilisateurs}" var="u" itemLabel="#{u.login}" itemValue="#{u.id}"/>
+                    <f:converter converterId="javax.faces.Long"/>
+                    <br/>
+                </h:selectManyCheckbox>
+             </h:panelGrid>
+             
+             <h:commandButton value="Modifier la tache" action="#{nouvelleTaches.modifierTache}"/>
+         </h:form>
+        
+    </h:body>
+</html>
+

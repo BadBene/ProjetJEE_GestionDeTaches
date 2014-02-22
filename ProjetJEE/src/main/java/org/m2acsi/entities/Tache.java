@@ -70,8 +70,8 @@ public class Tache implements Serializable {
     /**
      * timeline de la tache
      */
-//    @ManyToMany
-//    private List<Message> timeline;
+    @ManyToMany
+    private List<Message> timeline;
     
     public Tache() {
     }
@@ -130,6 +130,10 @@ public class Tache implements Serializable {
 
     public void setParticipants(List<Utilisateur> participants) {
         this.participants = participants;
+    }
+    
+    public void addMessage(Message message){
+        timeline.add(message);
     }
     
     public void addParticipant(Long utilisateurID){

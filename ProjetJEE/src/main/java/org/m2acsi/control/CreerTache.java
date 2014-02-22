@@ -43,6 +43,8 @@ public class CreerTache {
 
     private List<Long> listeParticipants;
     
+    private List<Utilisateur> listeParticipantsActif;
+    
     private Long pid;
 
     public CreerTache() {
@@ -117,6 +119,19 @@ public class CreerTache {
         this.pid = pid;
     }
 
+    public List<Utilisateur> getListeParticipantsActif() {
+        if(null == listeParticipantsActif){
+            listeParticipantsActif = tacheEJB.listeDeParticipants(pid);
+             FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("taille ? "+listeParticipantsActif.get(0).getLogin()));
+        }
+        
+        return listeParticipantsActif;
+    }
+
+    public void setListeParticipantsActif(List<Utilisateur> listeParticipantsActif) {
+        this.listeParticipantsActif = listeParticipantsActif;
+    }
+
     
     
     
@@ -177,6 +192,15 @@ public class CreerTache {
 //        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("tache "+tache.getNom()));
         return tache;
 //        return null;
+    }
+    
+    public String modifierTache(){
+        Tache tacheTMP = tacheEJB.findTache(pid);
+        tache.setId(pid);
+        tache.setResponsable(tacheTMP.getResponsable());
+        
+        tache = tacheEJB.modifierTache(tache);
+        return "connexion.xhtml?faces-redirect=true";
     }
 
     @Override
