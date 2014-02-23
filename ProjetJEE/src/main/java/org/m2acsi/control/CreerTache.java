@@ -13,8 +13,10 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.m2acsi.boundary.MessageEJB;
 import org.m2acsi.boundary.TacheEJB;
 import org.m2acsi.boundary.UtilisateurEJB;
+import org.m2acsi.entities.Message;
 import org.m2acsi.entities.Tache;
 import org.m2acsi.entities.Utilisateur;
 
@@ -31,6 +33,9 @@ public class CreerTache {
 
     @Inject
     private UtilisateurEJB utilisateurEJB;
+    
+    @Inject
+    private MessageEJB messageEJB;
 
     private Utilisateur utilisateur = (Utilisateur) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("connexionUtilisateur");
 
@@ -45,7 +50,11 @@ public class CreerTache {
     
     private List<Utilisateur> listeParticipantsActif;
     
+    private List<Message> listeMessages;
+    
     private Long pid;
+    
+    private Message mess = new Message();
 
     public CreerTache() {
     }
@@ -119,6 +128,24 @@ public class CreerTache {
         this.pid = pid;
     }
 
+    public List<Message> getListeMessages() {
+        return listeMessages;
+    }
+
+    public void setListeMessages(List<Message> listeMessages) {
+        this.listeMessages = listeMessages;
+    }
+
+    public Message getMess() {
+        return mess;
+    }
+
+    public void setMess(Message mess) {
+        this.mess = mess;
+    }
+
+    
+    
     public List<Utilisateur> getListeParticipantsActif() {
         if(null == listeParticipantsActif){
             listeParticipantsActif = tacheEJB.listeDeParticipants(pid);
@@ -193,6 +220,13 @@ public class CreerTache {
         return tache;
 //        return null;
     }
+    
+    public List<Message> messagesTache(){
+        listeMessages = tacheEJB.listeDeMessage(pid);
+        return listeMessages;
+    }
+    
+   
     
     public String modifierTache(){
         Tache tacheTMP = tacheEJB.findTache(pid);

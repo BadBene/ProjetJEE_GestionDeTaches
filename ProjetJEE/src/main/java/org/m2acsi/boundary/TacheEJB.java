@@ -15,6 +15,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import org.m2acsi.entities.Message;
 import org.m2acsi.entities.Tache;
 import org.m2acsi.entities.Utilisateur;
 import org.m2acsi.util.Constante;
@@ -120,5 +121,17 @@ public class TacheEJB {
         
        Tache t = em.createQuery(q).getResultList().get(0);
        return t.getParticipants();
+    }
+    
+    public List<Message> listeDeMessage(Long pid){
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Tache> q = cb.createQuery(Tache.class);
+        Root<Tache> tache = q.from(Tache.class);
+
+        q.select(tache);
+        q.where(cb.equal(tache.<Tache>get("id"), pid));
+        
+       Tache t = em.createQuery(q).getResultList().get(0);
+       return t.getTimeline();
     }
 }

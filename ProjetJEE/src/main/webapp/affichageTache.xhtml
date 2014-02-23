@@ -38,8 +38,30 @@
                     <h:outputLabel value="#{participant.login}"/>
                 </h:column>
             </h:dataTable>
+
+
             <h:outputLabel value="Timeline"/>
-            <h:outputText value=""/>
+            <h:dataTable value="#{nouvelleTaches.tache.timeline}" var="li" id="li">
+                <f:facet name="header">
+                    mess
+                </f:facet>
+                <h:column>
+                    <h:outputLabel value="#{li.message}"/>
+                </h:column>
+            </h:dataTable>
+
+
+            <h:form>
+                
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Rediger message"/>
+                    <h:inputTextarea value="#{nouveauMessage.message.message}"/>
+                </h:panelGrid>
+                <h:commandLink value="Poster votre message" action="#{nouveauMessage.ajouterMessage}">
+                    <f:setPropertyActionListener target="#{nouveauMessage.pid}" value="#{nouvelleTaches.pid}" />
+                </h:commandLink>
+            </h:form>
+
         </h:panelGrid>
     </h:body>
 </html>

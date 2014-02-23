@@ -3,13 +3,12 @@ package org.m2acsi.entities;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
 /**
@@ -70,7 +69,7 @@ public class Tache implements Serializable {
     /**
      * timeline de la tache
      */
-    @ManyToMany
+    @OneToMany
     private List<Message> timeline;
     
     public Tache() {
@@ -131,10 +130,19 @@ public class Tache implements Serializable {
     public void setParticipants(List<Utilisateur> participants) {
         this.participants = participants;
     }
-    
-    public void addMessage(Message message){
-        timeline.add(message);
+
+    public List<Message> getTimeline() {
+        return timeline;
     }
+
+    public void setTimeline(List<Message> timeline) {
+        this.timeline = timeline;
+    }
+    
+    public void addMessage(Message m){
+        timeline.add(m);
+    }
+    
     
     public void addParticipant(Long utilisateurID){
         
