@@ -1,30 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
     <!--f:if-->
     <head>
         <title>Creation Utilisateur</title>
         <meta name="viewport" content="width=device-width"/>
+        <h:outputStylesheet name="ressources/css/bootstrap.min.css"/>
+        <link href="ressources/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
     </head>
-    <body>
-         <h:form>
-            <h:panelGrid columns="2">
-                <h:outputLabel value="Login"/>
-                <h:inputText value="#{nouveauUtilisateur.utilisateur.login}"/>
-                <h:outputLabel value="Mot de passe"/>
-                <h:inputText value="#{nouveauUtilisateur.utilisateur.motDePasse}"/>
-                <h:outputLabel value="nom"/>
-                <h:inputText value="#{nouveauUtilisateur.utilisateur.nom}"/>
-                <h:outputLabel value="prenom"/>
-                <h:inputText value="#{nouveauUtilisateur.utilisateur.prenom}"/>
-                <h:outputLabel value="email"/>
-                <h:inputText value="#{nouveauUtilisateur.utilisateur.email}"/>
-            </h:panelGrid>
-             <h:commandButton value="Creer votre compte" action="#{nouveauUtilisateur.ajouterUtilisateur}"/>          
-        </h:form>
-        <h:link value="modifier utilisateur" outcome="modifierUtilisateur.xhtml">
-          
-        </h:link>
+    <body style="width: 250px; margin: 100px auto;background-color: #eee;">
+        <h:panelGroup layout="block">
+            <center><h2 class="form-signin-heading">Creer un compte</h2></center>
+            <h:form>
+                    <h:inputText value="#{nouveauUtilisateur.utilisateur.login}" class="form-control" pt:placeholder="Login"/>
+                    <h:inputText value="#{nouveauUtilisateur.utilisateur.motDePasse}" class="form-control" pt:placeholder="Mot de passe"/>
+                    <h:inputText value="#{nouveauUtilisateur.utilisateur.nom}" class="form-control" pt:placeholder="Nom"/>
+                    <h:inputText value="#{nouveauUtilisateur.utilisateur.prenom}" class="form-control" pt:placeholder="Prenom"/>
+                    <h:inputText value="#{nouveauUtilisateur.utilisateur.email}" class="form-control" pt:placeholder="Email"/>
+                <h:commandButton value="Creer votre compte" action="#{nouveauUtilisateur.ajouterUtilisateur}" class="btn btn-lg btn-primary btn-block"/>          
+            </h:form>
+        </h:panelGroup>
     </body>
 </html>

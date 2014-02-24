@@ -3,42 +3,44 @@
 <html xmlns="http://www.w3.org/1999/xhtml" 
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
     <head>
-        <title>Creation Utilisateur</title>
+        <title>Modifier Utilisateur</title>
         <meta name="viewport" content="width=device-width"/>
+        <h:outputStylesheet name="ressources/css/bootstrap.min.css"/>
+        <link href="ressources/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
     </head>
-    <body>
+    <body style="width: 350px; margin: 100px auto;background-color: #eee;">
         <f:metadata>
             <f:viewParam name="pid" value="#{nouveauUtilisateur.pid}" />
             <f:event type="javax.faces.event.PreRenderComponentEvent" listener="#{nouveauUtilisateur.detailUtilisateur}" />
         </f:metadata>
-        
-         <h:form>
-            <h:panelGrid columns="2">
-                <h:outputLabel value="Login"/>
-                <h:inputText label="#{nouveauUtilisateur.utilisateur.login}" value="#{nouveauUtilisateur.utilisateur.login}"/>
-                <h:outputLabel value="Mot de passe"/>
-                <h:inputSecret value="#{nouveauUtilisateur.utilisateur.motDePasse}"/>
-                <h:outputLabel value="nom"/>
-                <h:inputText value="#{nouveauUtilisateur.utilisateur.nom}"/>
-                <h:outputLabel value="prenom"/>
-                <h:inputText value="#{nouveauUtilisateur.utilisateur.prenom}"/>
-                <h:outputLabel value="email"/>
-                <h:inputText value="#{nouveauUtilisateur.utilisateur.email}"/>
-                <c:if test="#{nouveauUtilisateur.utilisateurConnecte.role.id eq 1}">
-                    <h:outputLabel value="Role"/>
+
+        <h:panelGroup layout="block">
+            <h:form>
+                <center><h2 class="form-signin-heading">Modifier #{nouveauUtilisateur.utilisateur.login}</h2></center>
+                    <h:inputText label="#{nouveauUtilisateur.utilisateur.login}" value="#{nouveauUtilisateur.utilisateur.login}" class="form-control" pt:placeholder="Login"/>
                     
-                    <h:selectOneMenu value="#{nouveauUtilisateur.roleModifie}" >
-                        <f:selectItem itemLabel="#{nouveauUtilisateur.utilisateur.role.nom}" itemValue="#{nouveauUtilisateur.utilisateur.role.id}"/>
-                        <f:selectItems value="#{nouveauUtilisateur.listeRole}" var="r" itemLabel="#{r.nom}" itemValue="#{r.id}" />
-                        <f:converter converterId="javax.faces.Long"/>
-                    </h:selectOneMenu>
+                    <h:inputSecret value="#{nouveauUtilisateur.utilisateur.motDePasse}" class="form-control" pt:placeholder="Mot de passe"/>
                     
-                </c:if>
-            </h:panelGrid>  
-             <h:commandButton value="Creer votre compte" action="#{nouveauUtilisateur.modifierUtilisateur}"/>
-        </h:form>
-       
+                    <h:inputText value="#{nouveauUtilisateur.utilisateur.nom}" class="form-control" pt:placeholder="Nom"/>
+                   
+                    <h:inputText value="#{nouveauUtilisateur.utilisateur.prenom}" class="form-control" pt:placeholder="Prenom"/>
+                   
+                    <h:inputText value="#{nouveauUtilisateur.utilisateur.email}" class="form-control" pt:placeholder="Email"/>
+                    <c:if test="#{nouveauUtilisateur.utilisateurConnecte.role.id eq 1}">
+                        <h:outputLabel value="Role"/>
+
+                        <h:selectOneMenu value="#{nouveauUtilisateur.roleModifie}" >
+                            <f:selectItem itemLabel="#{nouveauUtilisateur.utilisateur.role.nom}" itemValue="#{nouveauUtilisateur.utilisateur.role.id}"/>
+                            <f:selectItems value="#{nouveauUtilisateur.listeRole}" var="r" itemLabel="#{r.nom}" itemValue="#{r.id}" />
+                            <f:converter converterId="javax.faces.Long"/>
+                        </h:selectOneMenu>
+
+                    </c:if>
+                <h:commandButton value="Creer votre compte" action="#{nouveauUtilisateur.modifierUtilisateur}" class="btn btn-lg btn-primary btn-block"/>
+            </h:form>
+        </h:panelGroup>
     </body>
 </html>

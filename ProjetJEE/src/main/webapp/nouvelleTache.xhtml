@@ -2,39 +2,41 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
     <h:head>
         <title>Creer une Tache</title>
+        <meta name="viewport" content="width=device-width"/>
+        <h:outputStylesheet name="ressources/css/bootstrap.min.css"/>
+        <link href="ressources/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
     </h:head>
-    <h:body>
-        <h:form>
-            <h:panelGrid columns="2">
-                <h:outputLabel value="Nom"/>
-                <h:inputText value="#{nouvelleTaches.tache.nom}"/>
-                <h:outputLabel value="Description"/>
-                <h:inputTextarea value="#{nouvelleTaches.tache.description}"/>
-                <h:outputLabel value="Date d'echeance"/>
-                <h:inputText value="#{nouvelleTaches.tache.echeance}">
-                    <f:convertDateTime pattern="yyyy-MM-dd"/>
-                </h:inputText>
-                <h:outputLabel value="responsable de la tache :"/>
-                <h:outputLabel value="#{nouvelleTaches.utilisateur.login}"/>
+    <h:body style="width: 250px; margin: 100px auto;background-color: #eee;">
+        <h:panelGroup layout="block">
+            <h:form>
+                    <h:inputText value="#{nouvelleTaches.tache.nom}" class="form-control" pt:placeholder="Nom"/>
+                    
+                    <h:inputTextarea value="#{nouvelleTaches.tache.description}" class="form-control" pt:placeholder="Description"/>
+                    
+                    <h:inputText value="#{nouvelleTaches.tache.echeance}" class="form-control" pt:placeholder="Date (yyyy-MM-dd)">
+                        <f:convertDateTime pattern="yyyy-MM-dd"/>
+                    </h:inputText>
+                    <h:outputLabel value="responsable de la tache :"/>
+                    <h:outputLabel value="#{nouvelleTaches.utilisateur.login}"/>
 
 
-                <h:outputLabel value="Participants"/>
+                    <h:outputLabel value="Participants"/>
 
-                <h:selectManyCheckbox value="#{nouvelleTaches.listeParticipants}" >
-                    <f:selectItems value="#{nouvelleTaches.listeUtilisateurs}" var="u" itemLabel="#{u.login}" itemValue="#{u.id}"/>
-                    <f:converter converterId="javax.faces.Long"/>
-                    <br/>
-                </h:selectManyCheckbox>
+                    <h:selectManyCheckbox value="#{nouvelleTaches.listeParticipants}" >
+                        <f:selectItems value="#{nouvelleTaches.listeUtilisateurs}" var="u" itemLabel="#{u.login}" itemValue="#{u.id}"/>
+                        <f:converter converterId="javax.faces.Long"/>
+                        <br/>
+                    </h:selectManyCheckbox>
 
 
 
-            </h:panelGrid>
-            <h:commandButton value="Creer la tache" action="#{nouvelleTaches.ajouterTache}"/>          
-        </h:form>
-
+                <h:commandButton value="Creer la tache" action="#{nouvelleTaches.ajouterTache}" class="btn btn-lg btn-primary btn-block"/>              
+            </h:form>
+        </h:panelGroup>
 
     </h:body>
 </html>

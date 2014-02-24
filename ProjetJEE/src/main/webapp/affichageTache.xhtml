@@ -83,26 +83,25 @@
                                  value="upload file" >
                     <f:setPropertyActionListener target="#{fichierBean.pid}" value="#{nouvelleTaches.pid}" />
                 </h:commandButton>
-                    <br />
+                <br />
 
                 <!-- status message of file upload; rendered if message is set -->
                 <h:outputText value="#{fichierBean.statusMessage}"
                               rendered="#{not empty fichierBean.statusMessage}" />
             </h:form>
-            
-            
+
+
             <h:dataTable value="#{nouvelleTaches.tache.documents}" var="fi" id="fi">
                 <f:facet name="header">
                     Fichiers disponible
                 </f:facet>
                 <h:column>
-                     <h:form>
-                         <h:commandLink value="#{fi.nomFichier}" action="#{fichierBean.downloadFile(fi.nomFichier)}"/>
-                             
-                     </h:form>
+                    <h:form>
+                        <h:commandLink value="#{fi.nomFichier}" action="#{fichierBean.downloadFile(fi.nomFichier)}"/>
+                    </h:form>
                 </h:column>
             </h:dataTable>
-            
+
         </h:panelGrid>
     </h:body>
 </html>

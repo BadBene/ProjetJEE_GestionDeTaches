@@ -6,13 +6,26 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>Bienvenue #{connexionUtilisateur.utilisateur.login}</title>
+        <meta name="viewport" content="width=device-width"/>
+        <h:outputStylesheet name="ressources/css/bootstrap.min.css"/>
+        <link href="ressources/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
     </h:head>
-    <h:body>
+    <h:body style="width: 450px; margin: 50px auto;background-color: #eee;">
         <f:metadata>
             <f:event type="javax.faces.event.PreRenderComponentEvent" listener="#{connexionUtilisateur.retourneUtilisateurConnecte}" />
         </f:metadata>
+        
+        
+            <h:panelGroup layout="block" class="header">
+                <ul class="nav nav-pills pull-right">
+                    <li class="active">
+                        <h:link value="Accueil" outcome="accueil.xhtml" class="dropdown-toggle" />
+                    </li>
 
+                </ul>
+            </h:panelGroup>
 
+<h:panelGroup layout="block" class="jumbotron">
         <h:panelGrid columns="2">
 
             <!--liste des taches accessible a l'utilisateur-->
@@ -25,11 +38,11 @@
                         <h:commandLink value="#{tache.nom}" action="affichageTache.xhtml">
                             <f:setPropertyActionListener target="#{nouvelleTaches.pid}" value="#{tache.id}" />
                         </h:commandLink>
-                    <br/>
+                        <br/>
                         <c:if test="#{connexionUtilisateur.utilisateur.role.id eq 1}">
                             <h:commandLink value="     Modifier : #{tache.nom}" action="modifierTache.xhtml">
-                            <f:setPropertyActionListener target="#{nouvelleTaches.pid}" value="#{tache.id}" />
-                        </h:commandLink>
+                                <f:setPropertyActionListener target="#{nouvelleTaches.pid}" value="#{tache.id}" />
+                            </h:commandLink>
                         </c:if>
                     </h:form>
                 </h:column>
@@ -61,6 +74,7 @@
             </c:if>
 
         </h:panelGrid>
+</h:panelGroup>
 
     </h:body>
 </html>

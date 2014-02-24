@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.io.Serializable;
 
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -163,18 +164,22 @@ public class FichierBean implements Serializable {
         }
         return null;    // return to same page
     }
-    
+
+    public void test(String d) {
+        Fichier f = fichierEJB.findFichier(pid);
+        System.out.println("!!!!!!!!!!!!!!tache " + d + " - " + f.getLienFichier());
+    }
+
     /**
      * Fonction permettant de télécharger un fichier
-     * @param nameFile 
+     *
+     * @param nameFile
      */
     public void downloadFile(String nameFile) {
         try {
-            nameFile = "CM.pdf";
-            File file = new File(System.getProperties().get("user.home")+"/NetBeansProjects/ProjetJEE_GestionDeTaches/ProjetJEE/src/documents/" + nameFile);
-            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!! "+file.getPath());
+            File file = new File(System.getProperties().get("user.home") + "/NetBeansProjects/ProjetJEE_GestionDeTaches/ProjetJEE/src/main/webapp/resources/documents/" + nameFile);
             InputStream fis = new FileInputStream(file);
-            byte[] buf = new byte[Integer.valueOf((int)file.length())];
+            byte[] buf = new byte[Integer.valueOf((int) file.length())];
             int offset = 0;
             int numRead = 0;
             while ((offset < buf.length) && ((numRead = fis.read(buf, offset, buf.length - offset)) >= 0)) {
@@ -191,17 +196,56 @@ public class FichierBean implements Serializable {
         } catch (IOException ex) {
             System.out.println("Error : " + ex);
         }
-    } 
+    }
+        /**
+         * Fonction permettant de télécharger un fichier
+         *
+         * @param nameFile
+         */
+    public void downloadFile2() {
+            Fichier ff = fichierEJB.findFichier(pid);
+            
+        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("tache " + ff.getNomFichier()));
+    }
 
 
-   
-    /**
-     * // Extract file name from content-disposition header of file part
-     *
-     * @param part
-     * @return
-     */
-    private String getFileName(Part part) {
+//    public void downloadFile(String nameFile) {
+//        
+//            FacesMessage message = new FacesMessage("On est passe");
+//        System.out.println("MERDEEEEEEEEEEEEEEEEE");
+//        try {
+////            nameFile = "CM.pdf";
+//            File file = new File(System.getProperties().get("user.home")+"/NetBeansProjects/ProjetJEE_GestionDeTaches/ProjetJEE/src/documents/" + nameFile);
+////            File file = new File(nameFile);
+//            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!! "+file.getPath());
+//            InputStream fis = new FileInputStream(file);
+//            byte[] buf = new byte[Integer.valueOf((int)file.length())];
+//            int offset = 0;
+//            int numRead = 0;
+//            while ((offset < buf.length) && ((numRead = fis.read(buf, offset, buf.length - offset)) >= 0)) {
+//                offset += numRead;
+//            }
+//            fis.close();
+//            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+//            response.setContentType("application/download");
+//            
+//		 response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+//            response.setHeader("Content-Disposition", "attachment;filename=" + nameFile + "");
+//            response.getOutputStream().write(buf);
+//            response.getOutputStream().flush();
+//            response.getOutputStream().close();
+//            FacesContext.getCurrentInstance().responseComplete();
+//        } catch (IOException ex) {
+//            System.out.println("Error : " + ex);
+//        }
+//    } 
+/**
+ * // Extract file name from content-disposition header of file part
+ *
+ * @param part
+ * @return
+ */
+private String getFileName(Part part) {
         final String partHeader = part.getHeader("content-disposition");
         System.out.println("***** partHeader: " + partHeader);
         for (String content : part.getHeader("content-disposition").split(";")) {
