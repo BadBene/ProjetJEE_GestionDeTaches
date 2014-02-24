@@ -56,8 +56,8 @@ public class Tache implements Serializable {
     /**
      * liste de documents present dans la tache
      */
-//    @ManyToMany
-//    private List<Document> documents;
+    @OneToMany
+    private List<Fichier> documents;
     
     /**
      * timeline de la tache
@@ -68,12 +68,14 @@ public class Tache implements Serializable {
     public Tache() {
     }
 
-    public Tache(String nom, String description, Utilisateur responsable, List<Utilisateur> participants) {
+    public Tache(String nom, String description, Date echeance, Utilisateur responsable, List<Utilisateur> participants, List<Fichier> documents, List<Message> timeline) {
         this.nom = nom;
         this.description = description;
+        this.echeance = echeance;
         this.responsable = responsable;
         this.participants = participants;
-        
+        this.documents = documents;
+        this.timeline = timeline;
     }
 
     public Long getId() {
@@ -131,9 +133,21 @@ public class Tache implements Serializable {
     public void setTimeline(List<Message> timeline) {
         this.timeline = timeline;
     }
+
+    public List<Fichier> getDocuments() {
+        return documents;
+    }
+
+    public void setDocuments(List<Fichier> documents) {
+        this.documents = documents;
+    }
     
     public void addMessage(Message m){
         timeline.add(m);
+    }
+    
+    public void addDocument(Fichier fichier){
+        documents.add(fichier);
     }
     
     
