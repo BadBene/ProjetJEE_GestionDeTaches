@@ -1,4 +1,4 @@
-    package org.m2acsi.entities;
+package org.m2acsi.entities;
 
 
 import java.io.Serializable;
@@ -20,27 +20,27 @@ import javax.persistence.Temporal;
 public class Message implements Serializable{
 
     /**
-     * identifiant de la tache auto-incremente
+     * Iidentifiant de la tache auto-incremente
      */
     @Id
     @GeneratedValue
     private Long id;
 
     /**
-     * message d'un utilisateur pour une tache
+     * Message d'un utilisateur pour une tache
      */
 //    @Column(nullable = false)
     private String message;
 
     /**
-     * date d'emmission d'un message
+     * Date d'emmission d'un message
      */
 //    @Column(nullable = false)
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateMessage;
 
     /**
-     * utilisateur ayant creer le message
+     * Utilisateur ayant creer le message
      */
 //    @Column(nullable = false)
     @ManyToOne
@@ -49,6 +49,9 @@ public class Message implements Serializable{
     @ManyToOne
     private Tache tache;
 
+    /**
+     * Constructeurs
+     */
     public Message() {
     }
 
@@ -59,6 +62,10 @@ public class Message implements Serializable{
         this.tache = tache;
     }
 
+    /**
+     * Getters and Setters
+     * @return 
+     */
     public Long getId() {
         return id;
     }

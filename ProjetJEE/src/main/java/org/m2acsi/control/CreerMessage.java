@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.m2acsi.control;
 
 import java.lang.reflect.Array;
@@ -20,10 +15,6 @@ import org.m2acsi.entities.Message;
 import org.m2acsi.entities.Tache;
 import org.m2acsi.entities.Utilisateur;
 
-/**
- *
- * @author LoLo
- */
 @Named("nouveauMessage")
 @RequestScoped
 public class CreerMessage {
@@ -40,9 +31,16 @@ public class CreerMessage {
 
     private Long pid;
 
+    /**
+     * Constructeur
+     */
     public CreerMessage() {
     }
 
+    /**
+     * Getters and setters
+     * @return 
+     */
     public MessageEJB getMessageEJB() {
         return messageEJB;
     }
@@ -87,6 +85,11 @@ public class CreerMessage {
 //        message = messageEJB.findMessage(pid);
 //        return message;
 //    }
+    
+    /**
+     * Fonction permettant de récupérer la liste de messages en fonction d'une tâche
+     * @return 
+     */
     public Message rechercheMessage() {
 
 //        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("ID " + pid));
@@ -98,6 +101,9 @@ public class CreerMessage {
         return new Message("MERDEEEEEEtgsfhfgdhdgh", null, utilisateur, null);
     }
 
+    /**
+     * Fonction permettant d'ajouter un message
+     */
     public void ajouterMessage() {
         message.setUtilisateur(utilisateur);
         message.setDateMessage(new Date());

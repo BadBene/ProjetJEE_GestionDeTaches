@@ -6,13 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-/**
- * Classe entite du role
- * 
- * 
- * @author Gauthier Robert & Loic Mathias
- */
-
 @Entity
 public class Role implements Serializable {
     

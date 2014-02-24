@@ -9,13 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
-/**
- * Classe entite de l'utilisateur
- * 
- * 
- * @author Gauthier Robert & Loic Mathias
- */
-
 @Entity
 public class Utilisateur implements Serializable{
 

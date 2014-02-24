@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.m2acsi.boundary;
 
 import java.util.List;
@@ -17,16 +12,18 @@ import javax.persistence.criteria.Root;
 import org.m2acsi.entities.Message;
 import org.m2acsi.entities.Tache;
 
-/**
- *
- * @author LoLo
- */
 @Stateless
 public class MessageEJB {
 
     @PersistenceContext(unitName = "com.mycompany_ProjetJEE_war_1.0-SNAPSHOTPU")
     private EntityManager em;
 
+    /**
+     * Requête permettant d'ajouter un message
+     * @param message
+     * @param t
+     * @return 
+     */
     public Message creerMessage(Message message, Tache t) {
         FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("tache " + t.getNom()));
         t.addMessage(message);
@@ -35,6 +32,9 @@ public class MessageEJB {
         return message;
     }
 
+    /**
+     * Requête permettant de trouver les messages à partir de l'id d'une tâche
+     */
     public List<Message> findMessage(Long pid) {
         Tache t = em.find(Tache.class, pid);
 

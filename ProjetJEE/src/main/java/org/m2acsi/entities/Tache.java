@@ -11,13 +11,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
-/**
- * Classe entite de la tache
- * 
- * 
- * @author Gauthier Robert & Loic Mathias
- */
-
 @Entity
 public class Tache implements Serializable {
     

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.m2acsi.control;
 
 import java.io.Serializable;
@@ -22,13 +17,8 @@ import org.m2acsi.boundary.UtilisateurEJB;
 import org.m2acsi.entities.Utilisateur;
 import org.m2acsi.util.Encryptage;
 
-/**
- *
- * @author LoLo
- */
 @Named("connexionUtilisateur")
 @SessionScoped
-//sessionscoped jsf 2
 public class ConnexionUtilisateur implements Serializable {
 
     @PersistenceContext(unitName = "com.mycompany_ProjetJEE_war_1.0-SNAPSHOTPU")
@@ -46,9 +36,15 @@ public class ConnexionUtilisateur implements Serializable {
     
     private Long pid;
 
+    /**
+     * Constructeur
+     */
     public ConnexionUtilisateur() {
     }
 
+    /**
+     * Getters and setters
+     */
     public UtilisateurEJB getUtilisateurEJB() {
         return utilisateurEJB;
     }
@@ -57,8 +53,6 @@ public class ConnexionUtilisateur implements Serializable {
         this.utilisateurEJB = utilisateurEJB;
     }
     
-    
-
     public Utilisateur getUtilisateur() {
         return utilisateur;
     }
@@ -107,12 +101,22 @@ public class ConnexionUtilisateur implements Serializable {
         this.pid = pid;
     }
     
-    
-    
+    /**
+     * Fonction retournant l'utilisateur connecté
+     * @return 
+     */
     public Utilisateur retourneUtilisateurConnecte(){
         return (Utilisateur) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("connexionUtilisateur");
     }
 
+    /**
+     * 
+     * A DEPLACER DANS l'EJB COMME 
+     * 
+     * VERIFIER SI LA FONCTION DU DESSOUS FONCTIONNE ENCORE ENSUITE
+     * 
+     * Fonction permettant à un utilisateur de se connecter
+     */
     public List<Utilisateur> requeteConnexion() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Utilisateur> q = cb.createQuery(Utilisateur.class);
@@ -129,14 +133,16 @@ public class ConnexionUtilisateur implements Serializable {
         return em.createQuery(q).getResultList();
     }
 
+    /**
+     * Fonction permettant de vérifier si l'utilisateur est connecté au site
+     * @return 
+     */
     public String verificationConnexion() {
         String redirection;
         if (1 == requeteConnexion().size()) {
-
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("connexionUtilisateur", utilisateur);
             isLoggedIn = true;
             FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("Connecte"));
-//            redirection = "listeTaches.xhtml?faces-redirect=true";
             redirection = "accueil.xhtml?faces-redirect=true";
         } else {
             FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("Erreur connexion"));

@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package org.m2acsi.control;
 
 import java.util.List;
@@ -17,10 +11,6 @@ import org.m2acsi.entities.Utilisateur;
 import org.m2acsi.util.Encryptage;
 
 
-/**
- *
- * @author LoLo
- */
 @Named("nouveauUtilisateur")
 @RequestScoped
 public class NouveauUtilisateur {
@@ -38,6 +28,9 @@ public class NouveauUtilisateur {
     
     private Long roleModifie;
 
+    /**
+     * Constructeurs
+     */
     public NouveauUtilisateur() {
     }
 
@@ -45,6 +38,10 @@ public class NouveauUtilisateur {
         return utilisateurEJB;
     }
 
+    /**
+     * Getters and setters
+     *
+     */
     public void setUtilisateurEJB(UtilisateurEJB utilisateurEJB) {
         this.utilisateurEJB = utilisateurEJB;
     }
@@ -91,12 +88,12 @@ public class NouveauUtilisateur {
 
     public void setRoleModifie(Long roleModifie) {
         this.roleModifie = roleModifie;
-    }
-
+    }  
     
-    
-    
-    
+    /**
+     * Fonction permettant d'ajouter un utilisateur
+     * @return 
+     */
     public String ajouterUtilisateur(){
         utilisateur.setMotDePasse(Encryptage.MD5(utilisateur.getMotDePasse()));
         utilisateur.setRole(null);
@@ -104,6 +101,10 @@ public class NouveauUtilisateur {
         return "connexion.xhtml?faces-redirect=true";
     }
     
+    /**
+     * Fonction permettant de modifier un utilisateur 
+     * @return 
+     */
     public String modifierUtilisateur(){
         Utilisateur utilisateurTMP = utilisateurEJB.findUtilisateur(pid);
         utilisateur.setId(pid);
@@ -119,12 +120,19 @@ public class NouveauUtilisateur {
         return "connexion.xhtml?faces-redirect=true";
     }
     
+    /**
+     * Fonction permettant de modifier le rôle d'un utilisateur
+     * @return 
+     */
     public boolean modifierRole(){
         return 1 == utilisateur.getRole().getId();
     }
     
     
-    
+    /**
+     * Fonction permettant de trouver un utilisateur à partir de son id
+     * @return 
+     */
     public Utilisateur detailUtilisateur(){
         utilisateur = utilisateurEJB.findUtilisateur(pid);
         return utilisateur;

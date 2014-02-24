@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.m2acsi.control;
 
 import java.util.Date;
@@ -20,10 +15,6 @@ import org.m2acsi.entities.Message;
 import org.m2acsi.entities.Tache;
 import org.m2acsi.entities.Utilisateur;
 
-/**
- *
- * @author LoLo
- */
 @Named("nouvelleTaches")
 @RequestScoped
 public class CreerTache {
@@ -56,9 +47,15 @@ public class CreerTache {
     
     private Message mess = new Message();
 
+    /**
+     * Constructeur
+     */
     public CreerTache() {
     }
 
+    /**
+     * Getters and setters
+     */
     public List<Long> getListeParticipants() {
         return listeParticipants;
     }
@@ -110,7 +107,6 @@ public class CreerTache {
     public List<Tache> getListeTaches() {
         if (null == listeTaches) {
             listeTaches = tacheEJB.listeTache(utilisateur);
-//        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("taille ? "+listeTaches.size()+" element "+listeTaches.get(0)));
         }
 
         return listeTaches;
@@ -145,7 +141,10 @@ public class CreerTache {
     }
 
     
-    
+    /**
+     * Fonction permettant de récupérer les utilisateurs participant à une tâche
+     * @return 
+     */
     public List<Utilisateur> getListeParticipantsActif() {
         if(null == listeParticipantsActif){
             listeParticipantsActif = tacheEJB.listeDeParticipants(pid);
@@ -159,19 +158,16 @@ public class CreerTache {
         this.listeParticipantsActif = listeParticipantsActif;
     }
 
-    
-    
-    
-
+    /**
+     * Getter modifié permettant de récupérer la liste de l'ensemble des utilisateurs
+     * @return 
+     */
     public List<Utilisateur> getListeUtilisateurs() {
         if (null == listeUtilisateurs) {
             listeUtilisateurs = utilisateurEJB.listeUtilisateur();
             for (int i = 0; i < listeUtilisateurs.size(); i++) {
                 Utilisateur utili = listeUtilisateurs.get(i);
-//                FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("Bloucle"));
                 if (utili.getId() == this.utilisateur.getId()) {
-
-//                    FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("suppression"));
                     listeUtilisateurs.remove(i);
                 }
             }
@@ -179,6 +175,10 @@ public class CreerTache {
         return listeUtilisateurs;
     }
 
+    /**
+     * Setter
+     * @param listeUtilisateurs 
+     */
     public void setListeUtilisateurs(List<Utilisateur> listeUtilisateurs) {
         this.listeUtilisateurs = listeUtilisateurs;
     }
@@ -198,6 +198,10 @@ public class CreerTache {
         FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("Tache creee"));
     }
 
+    /**
+     * Fonction permettant de récupérer l'ensemble des tâches
+     * @return 
+     */
     public List<Tache> afficheTache() {
 //        FacesContext fc = FacesContext.getCurrentInstance();
 //        ConnexionUtilisateur connexionUtilisateur = (ConnexionUtilisateur) fc.getExternalContext().getSessionMap().get("connexionUtilisateur");
@@ -212,22 +216,28 @@ public class CreerTache {
         return listeTaches;
     }
     
+    /**
+     * Fonction permettant de récupérer une tâche à partir de son id
+     * @return 
+     */
     public Tache detailTache(){
-//        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("id tache "+pid));
         tache = tacheEJB.findTache(pid);
-        
-//        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("tache "+tache.getNom()));
         return tache;
-//        return null;
     }
     
+    /**
+     * Fonction qui récupère les message en relation avec une tâche
+     * @return 
+     */
     public List<Message> messagesTache(){
         listeMessages = tacheEJB.listeDeMessage(pid);
         return listeMessages;
     }
     
-   
-    
+    /**
+     * Fonction qui modifie le contenu de la tâche
+     * @return 
+     */
     public String modifierTache(){
         Tache tacheTMP = tacheEJB.findTache(pid);
         tache.setId(pid);
@@ -237,6 +247,9 @@ public class CreerTache {
         return "connexion.xhtml?faces-redirect=true";
     }
 
+    /**
+     * Fonction hashCode
+     */
     @Override
     public int hashCode() {
         int hash = 5;
@@ -251,8 +264,9 @@ public class CreerTache {
         return hash;
     }
 
-  
-
+    /**
+     * Fonction equals
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

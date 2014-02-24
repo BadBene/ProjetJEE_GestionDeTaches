@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.m2acsi.boundary;
 
 import java.util.List;
@@ -18,16 +13,17 @@ import org.m2acsi.entities.Role;
 import org.m2acsi.entities.Utilisateur;
 import org.m2acsi.util.Constante;
 
-/**
- *
- * @author LoLo
- */
 @Stateless
 public class UtilisateurEJB {
 
     @PersistenceContext(unitName = "com.mycompany_ProjetJEE_war_1.0-SNAPSHOTPU")
     private EntityManager em;
 
+    /**
+     * Requête permettant d'ajouter un utilisateur
+     * @param utilisateur
+     * @return 
+     */
     public Utilisateur creerUtilisateur(Utilisateur utilisateur) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Role> q = cb.createQuery(Role.class);
@@ -41,6 +37,10 @@ public class UtilisateurEJB {
         return utilisateur;
     }
 
+    /**
+     * Requête permettant d'afficher l'ensemble des utilisateurs
+     * @return 
+     */
     public List<Utilisateur> listeUtilisateur() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Utilisateur> q = cb.createQuery(Utilisateur.class);
@@ -51,6 +51,10 @@ public class UtilisateurEJB {
         return em.createQuery(q).getResultList();
     }
 
+    /**
+     * Requête permettant d'afficher les rôles possibles
+     * @return 
+     */
     public List<Role> listeRole() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Role> q = cb.createQuery(Role.class);
@@ -61,10 +65,21 @@ public class UtilisateurEJB {
         return em.createQuery(q).getResultList();
     }
 
+    /**
+     * Requête permettant de trouver un utilisateur à partir de son id
+     * @param id
+     * @return 
+     */
     public Utilisateur findUtilisateur(long id) {
         return em.find(Utilisateur.class, id);
     }
 
+    /**
+     * Requête permettant de modifier les informations d'un utilisateur
+     * @param utilisateur
+     * @param role
+     * @return 
+     */
     public Utilisateur modifierUtilisateur(Utilisateur utilisateur, Long role) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Role> q = cb.createQuery(Role.class);

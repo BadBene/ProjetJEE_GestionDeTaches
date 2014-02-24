@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.m2acsi.boundary;
 
 import java.util.ArrayList;
@@ -20,10 +15,6 @@ import org.m2acsi.entities.Tache;
 import org.m2acsi.entities.Utilisateur;
 import org.m2acsi.util.Constante;
 
-/**
- *
- * @author LoLo
- */
 @Stateless
 public class TacheEJB {
 
@@ -32,6 +23,10 @@ public class TacheEJB {
 
     private Long id;
 
+    /**
+     * Getters and setters
+     * @return 
+     */
     public Long getId() {
         return id;
     }
@@ -40,6 +35,12 @@ public class TacheEJB {
         this.id = id;
     }
 
+    /**
+     * Requête permettant de créer une tâche et d'y associer les participants
+     * @param tache
+     * @param listeParticipants
+     * @return 
+     */
     public Tache creerTache(Tache tache, List<Long> listeParticipants) {
         //select * from Utilisateur where id="$id"
         List<Utilisateur> listeUtili = new ArrayList<Utilisateur>();
@@ -64,6 +65,11 @@ public class TacheEJB {
         return tache;
     }
 
+    /**
+     * Requête permettant lde récupérer a liste de tâche en fonction de l'utilisateur (et de son rôle)
+     * @param utilisateur
+     * @return 
+     */
     public List<Tache> listeTache(Utilisateur utilisateur) {
         if (Constante.ROLE_RESPONSABLE.equals(utilisateur.getRole().getNom())) {
             CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -102,15 +108,28 @@ public class TacheEJB {
 
     }
 
+    /**
+     * Requête permettant de trouver une tâche avec son id
+     * @param id
+     * @return 
+     */
     public Tache findTache(long id) {
         return em.find(Tache.class, id);
     }
 
+    /**
+     * Requête permettant d'update les informations d'une tâche
+     * @param tache
+     * @return 
+     */
     public Tache modifierTache(Tache tache) {
         em.merge(tache);
         return tache;
     }
 
+    /**
+     * Requête permettant de récupérer les participants d'une tâche (id de la tâche en entrée)
+     */
     public List<Utilisateur> listeDeParticipants(Long pid) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Tache> q = cb.createQuery(Tache.class);
@@ -123,6 +142,9 @@ public class TacheEJB {
        return t.getParticipants();
     }
     
+    /**
+     * Requête permettant de trouver l'ensemble des messages d'une tâche
+     */
     public List<Message> listeDeMessage(Long pid){
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Tache> q = cb.createQuery(Tache.class);
