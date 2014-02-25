@@ -28,6 +28,8 @@ public class NouveauUtilisateur {
     private List<Role> listeRole;
     
     private Long roleModifie;
+    
+    private String mdpConfirm;
 
     /**
      * Constructeurs
@@ -90,12 +92,26 @@ public class NouveauUtilisateur {
     public void setRoleModifie(Long roleModifie) {
         this.roleModifie = roleModifie;
     }  
+
+    public String getMdpConfirm() {
+        return mdpConfirm;
+    }
+
+    public void setMdpConfirm(String mdpConfirm) {
+        this.mdpConfirm = mdpConfirm;
+    }
+    
+    
     
     /**
      * Fonction permettant d'ajouter un utilisateur
      * @return 
      */
     public String ajouterUtilisateur(){
+        if(!mdpConfirm.equals(utilisateur.getMotDePasse())){
+            return "nouveauUtilisateur.xhtml?faces-redirect=true";
+        }
+        
         utilisateur.setMotDePasse(Encryptage.MD5(utilisateur.getMotDePasse()));
         utilisateur.setRole(null);
         utilisateur = utilisateurEJB.creerUtilisateur(utilisateur);
