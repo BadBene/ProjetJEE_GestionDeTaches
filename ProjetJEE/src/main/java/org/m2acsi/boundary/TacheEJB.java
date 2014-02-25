@@ -25,7 +25,8 @@ public class TacheEJB {
 
     /**
      * Getters and setters
-     * @return 
+     *
+     * @return
      */
     public Long getId() {
         return id;
@@ -37,9 +38,10 @@ public class TacheEJB {
 
     /**
      * Requête permettant de créer une tâche et d'y associer les participants
+     *
      * @param tache
      * @param listeParticipants
-     * @return 
+     * @return
      */
     public Tache creerTache(Tache tache, List<Long> listeParticipants) {
         //select * from Utilisateur where id="$id"
@@ -66,9 +68,11 @@ public class TacheEJB {
     }
 
     /**
-     * Requête permettant lde récupérer a liste de tâche en fonction de l'utilisateur (et de son rôle)
+     * Requête permettant lde récupérer a liste de tâche en fonction de
+     * l'utilisateur (et de son rôle)
+     *
      * @param utilisateur
-     * @return 
+     * @return
      */
     public List<Tache> listeTache(Utilisateur utilisateur) {
         if (Constante.ROLE_RESPONSABLE.equals(utilisateur.getRole().getNom())) {
@@ -108,8 +112,9 @@ public class TacheEJB {
 
     /**
      * Requête permettant de trouver une tâche avec son id
+     *
      * @param id
-     * @return 
+     * @return
      */
     public Tache findTache(long id) {
         return em.find(Tache.class, id);
@@ -117,41 +122,97 @@ public class TacheEJB {
 
     /**
      * Requête permettant d'update les informations d'une tâche
+     *
      * @param tache
-     * @return 
+     * @param listeeParticipant
+     * @return
      */
-    public Tache modifierTache(Tache tache) {
+    public Tache modifierTache(Tache tache, List<Long> listeeParticipant) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Utilisateur> q = cb.createQuery(Utilisateur.class);
+        Root<Utilisateur> utilisateur = q.from(Utilisateur.class);
+
+        q.select(utilisateur);
+        List<Utilisateur> allUtilisateur = em.createQuery(q).getResultList();
+
+        List<Utilisateur> listeUtili = new ArrayList<Utilisateur>();
+        for (Long utili : listeeParticipant) {
+            listeUtili.add(em.find(Utilisateur.class, utili));
+//            CriteriaBuilder cb = em.getCriteriaBuilder();
+//            CriteriaQuery<Utilisateur> q = cb.createQuery(Utilisateur.class);
+//            Root<Utilisateur> utilisateur = q.from(Utilisateur.class);
+//
+//            q.select(utilisateur);
+//
+//            q.where(cb.equal(utilisateur.<Utilisateur>get("id"), utili));
+//            listeUtili.add(em.createQuery(q).getResultList().get(0));
+        }
+        tache.setParticipants(listeUtili);
+        for (Utilisateur utilisateur1 : allUtilisateur) {
+            if (!listeUtili.contains(utilisateur1) && utilisateur1.getListeDeParticipation().contains(tache)) {
+                utilisateur1.removeTache(tache);
+            } else if (listeUtili.contains(utilisateur1) && !utilisateur1.getListeDeParticipation().contains(tache)) {
+                utilisateur1.addTache(tache);
+            }
+
+            em.merge(utilisateur1);
+        }
+
+//        for (Utilisateur utilisateurB : listeUtili) {
+//            FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("!!! " + utilisateur));
+//            if (!utilisateurB.getListeDeParticipation().contains(tache)) {
+//                utilisateurB.addTache(tache);
+//            }
+//        }
         em.merge(tache);
         return tache;
     }
 
     /**
-     * Requête permettant de récupérer les participants d'une tâche (id de la tâche en entrée)
+     * Requête permettant de récupérer les participants d'une tâche (id de la
+     * tâche en entrée)
+     *
+     * @param pid
+     * @return
      */
-    public List<Utilisateur> listeDeParticipants(Long pid) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Tache> q = cb.createQuery(Tache.class);
-        Root<Tache> tache = q.from(Tache.class);
+    public List<Long> listeDeParticipants(Long pid) {
+        if(null != pid){
+//        CriteriaBuilder cb = em.getCriteriaBuilder();
+//        CriteriaQuery<Tache> q = cb.createQuery(Tache.class);
+//        Root<Tache> tache = q.from(Tache.class);
+//
+//        q.select(tache);
+//        q.where(cb.equal(tache.<Tache>get("id"), pid));
 
-        q.select(tache);
-        q.where(cb.equal(tache.<Tache>get("id"), pid));
-        
-       Tache t = em.createQuery(q).getResultList().get(0);
-       return t.getParticipants();
+//       Tache t = em.createQuery(q).getResultList().get(0);
+        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("pas de taches " + pid));
+        Tache ta = findTache(pid);
+
+        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("pas de taches " + ta.getParticipants().size()));
+
+        List<Long> liParticipant = new ArrayList<Long>();
+        List<Utilisateur> liUtili = ta.getParticipants();
+        for (Utilisateur utili : liUtili) {
+            liParticipant.add(utili.getId());
+        }
+
+        return liParticipant;
+        }
+        return null;
     }
-    
+
     /**
      * Requête permettant de trouver l'ensemble des messages d'une tâche
      */
-    public List<Message> listeDeMessage(Long pid){
+    public List<Message> listeDeMessage(Long pid) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Tache> q = cb.createQuery(Tache.class);
         Root<Tache> tache = q.from(Tache.class);
 
         q.select(tache);
         q.where(cb.equal(tache.<Tache>get("id"), pid));
-        
-       Tache t = em.createQuery(q).getResultList().get(0);
-       return t.getTimeline();
+
+        Tache t = em.createQuery(q).getResultList().get(0);
+        return t.getTimeline();
     }
 }

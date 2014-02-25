@@ -147,6 +147,12 @@ public class Utilisateur implements Serializable{
         listeDeParticipation.add(tache);
     }
     
+    public void removeTache(Tache tache){
+        if(listeDeParticipation.contains(tache)){
+            listeDeParticipation.remove(tache);
+        }
+    }
+    
     @Override
     public int hashCode() {
         int hash = 5;

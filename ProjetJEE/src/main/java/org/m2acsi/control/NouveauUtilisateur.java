@@ -122,7 +122,7 @@ public class NouveauUtilisateur {
                 roleModifie = Long.valueOf("2");
             }
         utilisateur = utilisateurEJB.modifierUtilisateur(utilisateur, roleModifie);
-        return "connexion.xhtml?faces-redirect=true";
+        return "accueil.xhtml?faces-redirect=true";
     }
     
     /**

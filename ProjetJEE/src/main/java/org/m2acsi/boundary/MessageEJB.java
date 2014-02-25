@@ -25,7 +25,7 @@ public class MessageEJB {
      * @return 
      */
     public Message creerMessage(Message message, Tache t) {
-        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("tache " + t.getNom()));
+//        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("tache " + t.getNom()));
         t.addMessage(message);
         em.persist(message);
         em.merge(t);

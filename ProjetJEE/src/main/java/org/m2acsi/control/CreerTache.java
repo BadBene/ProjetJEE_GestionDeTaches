@@ -24,7 +24,7 @@ public class CreerTache {
 
     @Inject
     private UtilisateurEJB utilisateurEJB;
-    
+
     @Inject
     private MessageEJB messageEJB;
 
@@ -38,13 +38,13 @@ public class CreerTache {
     private List<Utilisateur> listeUtilisateurs;
 
     private List<Long> listeParticipants;
-    
-    private List<Utilisateur> listeParticipantsActif;
-    
+
+    private List<Long> listeParticipantsActif;
+
     private List<Message> listeMessages;
-    
+
     private Long pid;
-    
+
     private Message mess = new Message();
 
     /**
@@ -140,28 +140,22 @@ public class CreerTache {
         this.mess = mess;
     }
 
-    
     /**
      * Fonction permettant de récupérer les utilisateurs participant à une tâche
-     * @return 
+     *
+     * @return
      */
-    public List<Utilisateur> getListeParticipantsActif() {
-        if(null == listeParticipantsActif){
+    public List<Long> getListeParticipantsActif() {
+        if (null == listeParticipantsActif) {
             listeParticipantsActif = tacheEJB.listeDeParticipants(pid);
-             
         }
-        
         return listeParticipantsActif;
     }
 
-    public void setListeParticipantsActif(List<Utilisateur> listeParticipantsActif) {
+    public void setListeParticipantsActif(List<Long> listeParticipantsActif) {
         this.listeParticipantsActif = listeParticipantsActif;
     }
 
-    /**
-     * Getter modifié permettant de récupérer la liste de l'ensemble des utilisateurs
-     * @return 
-     */
     public List<Utilisateur> getListeUtilisateurs() {
         if (null == listeUtilisateurs) {
             listeUtilisateurs = utilisateurEJB.listeUtilisateur();
@@ -177,23 +171,23 @@ public class CreerTache {
 
     /**
      * Setter
-     * @param listeUtilisateurs 
+     *
+     * @param listeUtilisateurs
      */
     public void setListeUtilisateurs(List<Utilisateur> listeUtilisateurs) {
         this.listeUtilisateurs = listeUtilisateurs;
     }
 
-    public void ajouterTache() {
+    public String ajouterTache() {
         tache.setResponsable(utilisateur);
-        
-        
-        tache = tacheEJB.creerTache(tache,listeParticipants);
-        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("Tache creee"));
+        tache = tacheEJB.creerTache(tache, listeParticipants);
+        return "accueil.xhtml?faces-redirect=true";
     }
 
     /**
      * Fonction permettant de récupérer l'ensemble des tâches
-     * @return 
+     *
+     * @return
      */
     public List<Tache> afficheTache() {
 //        FacesContext fc = FacesContext.getCurrentInstance();
@@ -208,36 +202,41 @@ public class CreerTache {
         listeTaches = tacheEJB.listeTache(null);
         return listeTaches;
     }
-    
+
     /**
      * Fonction permettant de récupérer une tâche à partir de son id
-     * @return 
+     *
+     * @return
      */
-    public Tache detailTache(){
+    public Tache detailTache() {
         tache = tacheEJB.findTache(pid);
         return tache;
     }
-    
+
     /**
      * Fonction qui récupère les message en relation avec une tâche
-     * @return 
+     *
+     * @return
      */
-    public List<Message> messagesTache(){
+    public List<Message> messagesTache() {
         listeMessages = tacheEJB.listeDeMessage(pid);
         return listeMessages;
     }
-    
+
     /**
      * Fonction qui modifie le contenu de la tâche
-     * @return 
+     *
+     * @return
      */
-    public String modifierTache(){
+    public String modifierTache() {
+
+        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("PID " + pid));
         Tache tacheTMP = tacheEJB.findTache(pid);
         tache.setId(pid);
         tache.setResponsable(tacheTMP.getResponsable());
-        
-        tache = tacheEJB.modifierTache(tache);
-        return "connexion.xhtml?faces-redirect=true";
+
+        tache = tacheEJB.modifierTache(tache, listeParticipantsActif);
+        return "accueil.xhtml?faces-redirect=true";
     }
 
     /**
@@ -296,5 +295,4 @@ public class CreerTache {
         return true;
     }
 
-    
 }

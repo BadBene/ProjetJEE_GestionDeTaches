@@ -107,7 +107,7 @@ public class CreerMessage {
     public void ajouterMessage() {
         message.setUtilisateur(utilisateur);
         message.setDateMessage(new Date());
-        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("pid : " + pid));
+//        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("pid : " + pid));
         Tache tache = tacheEJB.findTache(pid);
         message.setTache(tache);
         message = messageEJB.creerMessage(message, tache);

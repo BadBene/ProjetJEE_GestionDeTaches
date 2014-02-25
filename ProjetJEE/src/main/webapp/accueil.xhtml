@@ -10,50 +10,65 @@
         <h:outputStylesheet name="ressources/css/bootstrap.min.css"/>
         <link href="ressources/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
     </h:head>
-    <h:body style="width: 450px; margin: 50px auto;background-color: #eee;">
+
+    <h:body style="width: 650px; margin: 50px auto;background-color: #eee;">
         <f:metadata>
             <f:event type="javax.faces.event.PreRenderComponentEvent" listener="#{connexionUtilisateur.retourneUtilisateurConnecte}" />
         </f:metadata>
 
-
+        <div class="page-header">
+            <h1>Accueil : Gestion de tâches<br/><small>#{connexionUtilisateur.utilisateur.nom} #{connexionUtilisateur.utilisateur.prenom}</small></h1>
+        </div>
 
 
         <h:panelGroup layout="block" class="jumbotron">
             <h:panelGrid columns="1">
-                <!--modifier son compte utilisateur-->            
+                <!--Gestion des tâches-->  
                 <h:form>
-                <c:if test="#{connexionUtilisateur.utilisateur.role.id eq 1}">
-                    <g><h:commandLink value="Creer une tache" action="nouvelleTache.xhtml"/></g><br/>
-                </c:if>
-                    <i> <h:commandLink value="modifier mon compte" action="modifierUtilisateur.xhtml">
-                        <f:setPropertyActionListener target="#{nouveauUtilisateur.pid}" value="#{connexionUtilisateur.utilisateur.id}" />
-                        </h:commandLink></i>
+                    <c:if test="#{connexionUtilisateur.utilisateur.role.id eq 1}">
+                        <h3 class="form-signin-heading"><h:outputLabel value="Gestion des tâches" style="background-color: #f9f9f9;"/></h3>
+                        <h4 class="form-signin-heading"><h:outputLabel value="Nouvelle tâche"/></h4>
+                        <g><h:commandLink value="Creer une tache" action="nouvelleTache.xhtml"/></g><br/>
+
+                        <h4 class="form-signin-heading"><h:outputLabel value="Modifier tâche"/></h4>
+                        <h:dataTable value="#{nouvelleTaches.listeTaches}" var="tac" id="tac">
+                            <h:column>
+                                    <h:commandLink value="#{tac.nom}" action="modifierTache.xhtml">
+                                        <f:setPropertyActionListener target="#{nouvelleTaches.pid}" value="#{tac.id}" />
+                                    </h:commandLink>
+                            </h:column>
+                        </h:dataTable>   
+                    </c:if>
                 </h:form>
 
-
                 <!--liste des taches accessible a l'utilisateur-->
-                <h:dataTable value="#{nouvelleTaches.listeTaches}" var="tache" id="tache">
+                <h4 class="form-signin-heading"><h:outputLabel value="Tâches disponibles"/></h4>
+                <h:dataTable value="#{nouvelleTaches.listeTaches}" var="tache" >
                     <f:facet name="header">
-                        Tache auquelle vous avez acces
+                        Nom
                     </f:facet>
                     <h:column>
                         <h:form>
                             <h:commandLink value="#{tache.nom}" action="affichageTache.xhtml">
                                 <f:setPropertyActionListener target="#{nouvelleTaches.pid}" value="#{tache.id}" />
                             </h:commandLink>
-
                         </h:form>
                     </h:column>
                 </h:dataTable>
+                
+                <h:form>
+                    <h3 class="form-signin-heading"><h:outputLabel value="Gestion de compte" style="background-color: #f9f9f9;"/></h3>
+                    <h4 class="form-signin-heading"><h:outputLabel value="Mon compte"/></h4>
+                    <i> <h:commandLink value="Gérer mon compte" action="modifierUtilisateur.xhtml">
+                            <f:setPropertyActionListener target="#{nouveauUtilisateur.pid}" value="#{connexionUtilisateur.utilisateur.id}" />
+                        </h:commandLink></i>
+                </h:form>
 
-
-                <!--rendre visible les champs ?-->
+                <!--Afficher les utilisateurs pour les modifier (accessible en tant qu'admin)-->
 
                 <c:if test="#{connexionUtilisateur.utilisateur.role.id eq 1}">
+                    <h2 class="form-signin-heading"><h:outputLabel value="Gérer les utilisateurs"/></h2>
                     <h:dataTable value="#{nouvelleTaches.listeUtilisateurs}" var="utilisateur" id="utilisateur">
-                        <f:facet name="header">
-                            Modifier les utilisateurs
-                        </f:facet>
                         <h:column>
                             <h:form>
                                 <h:commandLink value="#{utilisateur.login}" action="modifierUtilisateur.xhtml">
@@ -63,19 +78,7 @@
                         </h:column>
                     </h:dataTable>
 
-                    <h:dataTable value="#{nouvelleTaches.listeTaches}" var="tac" id="tac">
-                        <f:facet name="header">
-                            Tache que vous pouvez modifier
-                        </f:facet>
-                        <h:column>
-                            <h:form>
-                                <h:commandLink value="#{tac.nom}" action="modifierTache.xhtml">
-                                    <f:setPropertyActionListener target="#{nouvelleTaches.pid}" value="#{tac.id}" />
-                                </h:commandLink>
-                            </h:form>
-                        </h:column>
 
-                    </h:dataTable>   
 
                 </c:if>
 
