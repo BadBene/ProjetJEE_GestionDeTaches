@@ -77,7 +77,6 @@ public class TacheEJB {
             Root<Tache> tache = q.from(Tache.class);
 
             q.select(tache);
-//            FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("responsable"));
             return em.createQuery(q).getResultList();
         } else {
             CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -97,7 +96,6 @@ public class TacheEJB {
                         }
                     }
                 }
-                FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("editeur"));
                 return lTacheTmp;
 
             }

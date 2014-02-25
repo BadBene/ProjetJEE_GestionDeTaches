@@ -3,11 +3,14 @@ package org.m2acsi.entities;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Utilisateur implements Serializable{
@@ -56,18 +59,13 @@ public class Utilisateur implements Serializable{
      * ! ! expression reguliere du format du mail
      */
 //    @Size(min = 6, max = 50, message = "Email non conforme !")
-    //^[a-Z]+@
+//    @Pattern(regexp = "^[a-zA-Z0-9\\._-]+@[a-zA-Z0-9\\.-]{2,}[\\.][a-zA-Z]{2,4}$")
     private String email;
     
     @ManyToMany
     private List<Tache> listeDeParticipation;
     
-    /**
-     * date de creation du compte de l'utilisateur
-     */
-//    @Temporal(javax.persistence.TemporalType.DATE)
-//    private Date dateCreation;
-
+    
     public Utilisateur() {
     }
 
@@ -77,8 +75,7 @@ public class Utilisateur implements Serializable{
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
-        this.role = role;
-//        this.dateCreation = new Date(System.currentTimeMillis());         
+        this.role = role;        
     }    
 
     public Long getId() {
@@ -145,17 +142,6 @@ public class Utilisateur implements Serializable{
         this.role = role;
     }
 
-//    public Date getDateCreation() {
-//        return dateCreation;
-//    }
-//
-//    public void setDateCreation(Date dateCreation) {
-//        this.dateCreation = dateCreation;
-//    }
-//    @Override
-//    public String toString() {
-//        return "Utilisateur{" + "id=" + id + ", login=" + login + ", motDePasse=" + motDePasse + ", role=" + role + ", nom=" + nom + ", prenom=" + prenom + ", email=" + email + '}';
-//    }
     
     public void addTache(Tache tache){
         listeDeParticipation.add(tache);

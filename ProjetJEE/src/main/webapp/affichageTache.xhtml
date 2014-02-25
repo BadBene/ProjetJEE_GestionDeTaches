@@ -2,107 +2,111 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
     <h:head>
         <title>#{nouvelleTaches.tache.nom}</title>
+        <meta name="viewport" content="width=device-width"/>
+        <h:outputStylesheet name="ressources/css/bootstrap.min.css"/>
+        <link href="ressources/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
     </h:head>
-    <h:body>
+    <h:body style="width: 650px; margin: 50px auto;background-color: #eee;">
 
         <f:metadata>
             <f:viewParam name="pid" value="#{nouvelleTaches.pid}" />
             <f:event type="javax.faces.event.PreRenderComponentEvent" listener="#{nouvelleTaches.detailTache()}" />
         </f:metadata>
 
-        <h:panelGrid columns="2">
+        <table  style="width: 100%; background-color: #f9f9f9;">
+            <tr><td>
+                    <h2 class="form-signin-heading"><h:outputLabel value="#{nouvelleTaches.tache.nom}"/></h2>
+                </td></tr>
+        </table>
 
-            <h:outputLabel value="Nom"/>
-            <h:outputLabel value="#{nouvelleTaches.tache.nom}"/>
+        <h:panelGrid columns="2" style="width: 100%;" >
+            <h:panelGrid columns="1" styleClass="top-aligned-columns" style="width: 50%; display: block;">                   
+                <h3 class="form-signin-heading"><h:outputLabel value="Responsable"/></h3>
+                <h:outputLabel value="#{nouvelleTaches.tache.responsable.login}"/>                   
+                <h:dataTable value="#{nouvelleTaches.tache.participants}" var="participant" id="participant">
+                    <f:facet name="header">
+                        Participants
+                    </f:facet>
+                    <h:column>
+                        <h:outputLabel value="#{participant.login}"/>
+                    </h:column>
+                </h:dataTable>   
+                <h3><h:outputLabel value="Description"/></h3>
+                <h:outputLabel value="#{nouvelleTaches.tache.description}"/>
+                <h:outputLabel value="Echeance"/>
+                <h:outputLabel value="#{nouvelleTaches.tache.echeance}">
+                    <f:convertDateTime pattern="yyyy-MM-dd"/>
+                </h:outputLabel>
+            </h:panelGrid>
+            
 
-            <h:outputLabel value="Description"/>
-            <h:outputLabel value="#{nouvelleTaches.tache.description}"/>
+            <h:panelGrid columns="1" style="width: 50%; float: right;">
+                <h:dataTable value="#{nouvelleTaches.tache.timeline}" var="li" id="li">
+                    <f:facet name="header">
+                        Timeline
+                    </f:facet>
+                    <h:column>
+                        <h:outputLabel value="#{li.message}"/>
+                        <i><h:outputLabel value="posté par #{li.utilisateur.login}"/></i>
 
-            <h:outputLabel value="Echeance"/>
-            <h:outputLabel value="#{nouvelleTaches.tache.echeance}">
-                <f:convertDateTime pattern="yyyy-MM-dd"/>
-            </h:outputLabel>
+                    </h:column>
+                </h:dataTable>
 
-            <h:outputLabel value="Responsable"/>
-            <h:outputLabel value="#{nouvelleTaches.tache.responsable.login}"/>
-
-            <h:dataTable value="#{nouvelleTaches.tache.participants}" var="participant" id="participant">
-                <f:facet name="header">
-                    Participants
-                </f:facet>
-                <h:column>
-                    <h:outputLabel value="#{participant.login}"/>
-                </h:column>
-            </h:dataTable>
-
-
-            <h:outputLabel value="Timeline"/>
-            <h:dataTable value="#{nouvelleTaches.tache.timeline}" var="li" id="li">
-                <f:facet name="header">
-                    mess
-                </f:facet>
-                <h:column>
-                    <h:outputLabel value="#{li.message}"/>
-                </h:column>
-            </h:dataTable>
-
-
-            <h:form>
-
-                <h:panelGrid columns="2">
-                    <h:outputLabel value="Rediger message"/>
-                    <h:inputTextarea value="#{nouveauMessage.message.message}"/>
-                </h:panelGrid>
-                <h:commandLink value="Poster votre message" action="#{nouveauMessage.ajouterMessage}">
-                    <f:setPropertyActionListener target="#{nouveauMessage.pid}" value="#{nouvelleTaches.pid}" />
-                </h:commandLink>
-            </h:form>
-
-
-
-            <h:form id="inputForm" enctype="multipart/form-data">
-
-                <!-- inputFile tag to upload file -->
-                Upload File 
-                <h:inputFile id="file" 
-                             label="file"
-                             value="#{fichierBean.part}" 
-                             required="true" 
-                             requiredMessage="File not selected !!">
-                    <!-- FileUploadValidator for file validation -->
-                    <f:validator validatorId="FileUploadValidator" />
-                </h:inputFile>
-                <h:message style="color: red" for="file" /><br />
-
-                <h:commandButton id="submit" 
-                                 action="#{fichierBean.uploadFile}"
-                                 value="upload file" >
-                    <f:setPropertyActionListener target="#{fichierBean.pid}" value="#{nouvelleTaches.pid}" />
-                </h:commandButton>
-                <br />
-
-                <!-- status message of file upload; rendered if message is set -->
-                <h:outputText value="#{fichierBean.statusMessage}"
-                              rendered="#{not empty fichierBean.statusMessage}" />
-            </h:form>
-
-
-            <h:dataTable value="#{nouvelleTaches.tache.documents}" var="fi" id="fi">
-                <f:facet name="header">
-                    Fichiers disponible
-                </f:facet>
-                <h:column>
-                    <h:form>
-                        <h:commandLink value="#{fi.nomFichier}" action="#{fichierBean.downloadFile(fi.nomFichier)}"/>
-                    </h:form>
-                </h:column>
-            </h:dataTable>
-
+                <h:form>
+                    <h:inputText value="#{nouveauMessage.message.message}" class="form-control" pt:placeholder="Rediger un message"/>
+                    <h:commandLink value="Poster votre message" action="#{nouveauMessage.ajouterMessage}">
+                        <f:setPropertyActionListener target="#{nouveauMessage.pid}" value="#{nouvelleTaches.pid}" />
+                    </h:commandLink>
+                </h:form>
+            </h:panelGrid>
         </h:panelGrid>
+
+
+        <h:dataTable value="#{nouvelleTaches.tache.documents}" var="fi" id="fi">
+            <f:facet name="header">
+                Fichiers disponible
+            </f:facet>
+            <h:column>
+                <h:form>
+                    <h:commandLink value="#{fi.nomFichier}" action="#{fichierBean.downloadFile(fi.nomFichier)}"/>
+                </h:form>
+            </h:column>
+        </h:dataTable>
+
+        <h:form id="inputForm" enctype="multipart/form-data">
+
+            <!-- inputFile tag to upload file -->
+            Upload File 
+            <h:inputFile id="file" 
+                         label="file"
+                         value="#{fichierBean.part}" 
+                         required="true" 
+                         requiredMessage="File not selected !!">
+                <!-- FileUploadValidator for file validation -->
+                <f:validator validatorId="FileUploadValidator" />
+            </h:inputFile>
+            <h:message style="color: red" for="file" /><br />
+
+            <h:commandButton id="submit" 
+                             action="#{fichierBean.uploadFile}"
+                             value="upload file" >
+                <f:setPropertyActionListener target="#{fichierBean.pid}" value="#{nouvelleTaches.pid}" />
+            </h:commandButton>
+            <br />
+
+            <!-- status message of file upload; rendered if message is set -->
+            <h:outputText value="#{fichierBean.statusMessage}"
+                          rendered="#{not empty fichierBean.statusMessage}" />
+        </h:form>
+
+
+
+
     </h:body>
 </html>
 

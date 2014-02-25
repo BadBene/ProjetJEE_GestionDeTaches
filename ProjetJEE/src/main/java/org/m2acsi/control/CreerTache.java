@@ -148,7 +148,7 @@ public class CreerTache {
     public List<Utilisateur> getListeParticipantsActif() {
         if(null == listeParticipantsActif){
             listeParticipantsActif = tacheEJB.listeDeParticipants(pid);
-             FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("taille ? "+listeParticipantsActif.get(0).getLogin()));
+             
         }
         
         return listeParticipantsActif;
@@ -184,15 +184,8 @@ public class CreerTache {
     }
 
     public void ajouterTache() {
-//        tache.setParticipants(listeParticipants);
         tache.setResponsable(utilisateur);
-//        tache.setEcheance(echeance);
         
-//        for(Utilisateur utili : listeParticipants){
-//            tache.addParticipant(listeParticipants.get(0));
-//        }
-        
-        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("Taille : " + listeParticipants.get(0)));
         
         tache = tacheEJB.creerTache(tache,listeParticipants);
         FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("Tache creee"));

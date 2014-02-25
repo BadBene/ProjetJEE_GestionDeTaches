@@ -31,7 +31,7 @@ public class UtilisateurEJB {
         q.select(role);
 
         q.where(cb.equal(role.<String>get("nom"), Constante.ROLE_EDITEUR));
-
+        
         utilisateur.setRole(em.createQuery(q).getResultList().get(0));
         em.persist(utilisateur);
         return utilisateur;
@@ -88,9 +88,10 @@ public class UtilisateurEJB {
         q.select(ro);
 
         q.where(cb.equal(ro.<Role>get("id"), role));
+        List<Role> lrole = em.createQuery(q).getResultList();
+        
         Role r = (Role)em.createQuery(q).getResultList().get(0);
         utilisateur.setRole(r);
-        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("id utili " + utilisateur.getId()));
         em.merge(utilisateur);
         return utilisateur;
     }

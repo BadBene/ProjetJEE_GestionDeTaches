@@ -2,6 +2,7 @@ package org.m2acsi.control;
 
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -116,6 +117,10 @@ public class NouveauUtilisateur {
         utilisateur.setMotDePasse(Encryptage.MD5(utilisateur.getMotDePasse()));
         }
 //        utilisateur.setRole(utilisateur.g);
+        
+            if(null == roleModifie){
+                roleModifie = Long.valueOf("2");
+            }
         utilisateur = utilisateurEJB.modifierUtilisateur(utilisateur, roleModifie);
         return "connexion.xhtml?faces-redirect=true";
     }
