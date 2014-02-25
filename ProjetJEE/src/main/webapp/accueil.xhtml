@@ -18,6 +18,9 @@
 
         <div class="page-header">
             <h1>Accueil : Gestion de tâches<br/><small>#{connexionUtilisateur.utilisateur.nom} #{connexionUtilisateur.utilisateur.prenom}</small></h1>
+            <h:form>
+                <h:commandLink value="Deconnexion" action="connexion.xhtml"/>
+            </h:form>
         </div>
 
 
@@ -33,9 +36,9 @@
                         <h4 class="form-signin-heading"><h:outputLabel value="Modifier tâche"/></h4>
                         <h:dataTable value="#{nouvelleTaches.listeTaches}" var="tac" id="tac">
                             <h:column>
-                                    <h:commandLink value="#{tac.nom}" action="modifierTache.xhtml">
-                                        <f:setPropertyActionListener target="#{nouvelleTaches.pid}" value="#{tac.id}" />
-                                    </h:commandLink>
+                                <h:commandLink value="#{tac.nom}" action="modifierTache.xhtml">
+                                    <f:setPropertyActionListener target="#{nouvelleTaches.pid}" value="#{tac.id}" />
+                                </h:commandLink>
                             </h:column>
                         </h:dataTable>   
                     </c:if>
@@ -55,7 +58,7 @@
                         </h:form>
                     </h:column>
                 </h:dataTable>
-                
+
                 <h:form>
                     <h3 class="form-signin-heading"><h:outputLabel value="Gestion de compte" style="background-color: #f9f9f9;"/></h3>
                     <h4 class="form-signin-heading"><h:outputLabel value="Mon compte"/></h4>

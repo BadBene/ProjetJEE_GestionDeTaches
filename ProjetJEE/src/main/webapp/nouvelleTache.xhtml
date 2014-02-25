@@ -10,27 +10,33 @@
         <h:outputStylesheet name="ressources/css/bootstrap.min.css"/>
         <link href="ressources/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
     </h:head>
-    <h:body style="width: 250px; margin: 100px auto;background-color: #eee;">
+    <h:body style="width: 350px; margin: 100px auto;background-color: #eee;">
+        <div class="page-header">
+            <h1>Creation d'une tache<br/><small>#{connexionUtilisateur.utilisateur.nom} #{connexionUtilisateur.utilisateur.prenom}</small></h1>
+            <h:form>
+                <h:commandLink value="Accueil" action="accueil.xhtml"/>
+            </h:form>
+        </div>
         <h:panelGroup layout="block">
             <h:form>
-                    <h:inputText value="#{nouvelleTaches.tache.nom}" class="form-control" pt:placeholder="Nom"/>
-                    
-                    <h:inputTextarea value="#{nouvelleTaches.tache.description}" class="form-control" pt:placeholder="Description"/>
-                    
-                    <h:inputText value="#{nouvelleTaches.tache.echeance}" class="form-control" pt:placeholder="Date (yyyy-MM-dd)">
-                        <f:convertDateTime pattern="yyyy-MM-dd"/>
-                    </h:inputText>
-                    <h:outputLabel value="responsable de la tache :"/>
-                    <h:outputLabel value="#{nouvelleTaches.utilisateur.login}"/>
+                <h:inputText value="#{nouvelleTaches.tache.nom}" class="form-control" pt:placeholder="Nom"/>
 
+                <h:inputTextarea value="#{nouvelleTaches.tache.description}" class="form-control" pt:placeholder="Description"/>
 
-                    <h:outputLabel value="Participants"/>
+                <h:inputText value="#{nouvelleTaches.tache.echeance}" class="form-control" pt:placeholder="Date (yyyy-MM-dd)">
+                    <f:convertDateTime pattern="yyyy-MM-dd"/>
+                </h:inputText>
+                <h:outputLabel value="responsable de la tache :"/>
+                <h:outputLabel value="#{nouvelleTaches.utilisateur.login}"/>
 
-                    <h:selectManyCheckbox value="#{nouvelleTaches.listeParticipants}" >
-                        <f:selectItems value="#{nouvelleTaches.listeUtilisateurs}" var="u" itemLabel="#{u.login}" itemValue="#{u.id}"/>
-                        <f:converter converterId="javax.faces.Long"/>
-                        <br/>
-                    </h:selectManyCheckbox>
+                <br/>
+                <h:outputLabel value="Participants"/>
+
+                <h:selectManyCheckbox value="#{nouvelleTaches.listeParticipants}" >
+                    <f:selectItems value="#{nouvelleTaches.listeUtilisateurs}" var="u" itemLabel="#{u.login}" itemValue="#{u.id}"/>
+                    <f:converter converterId="javax.faces.Long"/>
+                    <br/>
+                </h:selectManyCheckbox>
 
 
 

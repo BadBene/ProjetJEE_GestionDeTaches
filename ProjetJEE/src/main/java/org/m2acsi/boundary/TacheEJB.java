@@ -151,6 +151,8 @@ public class TacheEJB {
         for (Utilisateur utilisateur1 : allUtilisateur) {
             if (!listeUtili.contains(utilisateur1) && utilisateur1.getListeDeParticipation().contains(tache)) {
                 utilisateur1.removeTache(tache);
+                
+        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("suppression utilisateur " ));
             } else if (listeUtili.contains(utilisateur1) && !utilisateur1.getListeDeParticipation().contains(tache)) {
                 utilisateur1.addTache(tache);
             }
@@ -185,10 +187,10 @@ public class TacheEJB {
 //        q.where(cb.equal(tache.<Tache>get("id"), pid));
 
 //       Tache t = em.createQuery(q).getResultList().get(0);
-        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("pas de taches " + pid));
+//        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("pas de taches " + pid));
         Tache ta = findTache(pid);
 
-        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("pas de taches " + ta.getParticipants().size()));
+//        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("pas de taches " + ta.getParticipants().size()));
 
         List<Long> liParticipant = new ArrayList<Long>();
         List<Utilisateur> liUtili = ta.getParticipants();

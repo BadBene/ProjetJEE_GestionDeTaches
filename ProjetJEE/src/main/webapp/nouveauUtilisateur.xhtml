@@ -11,11 +11,14 @@
         <link href="ressources/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
     </head>
     <body style="width: 250px; margin: 100px auto;background-color: #eee;">
+        <div class="page-header">
+            <h1>Nouvel utilisateur<br/></h1>
+        </div>
         <h:panelGroup layout="block">
             <center><h2 class="form-signin-heading">Creer un compte</h2></center>
             <h:form>
                     <h:inputText value="#{nouveauUtilisateur.utilisateur.login}" class="form-control" pt:placeholder="Login"/>
-                    <h:inputText value="#{nouveauUtilisateur.utilisateur.motDePasse}" class="form-control" pt:placeholder="Mot de passe"/>
+                    <h:inputSecret value="#{nouveauUtilisateur.utilisateur.motDePasse}" class="form-control" pt:placeholder="Mot de passe"/>
                     <h:inputText value="#{nouveauUtilisateur.utilisateur.nom}" class="form-control" pt:placeholder="Nom"/>
                     <h:inputText value="#{nouveauUtilisateur.utilisateur.prenom}" class="form-control" pt:placeholder="Prenom"/>
                     <h:inputText value="#{nouveauUtilisateur.utilisateur.email}" class="form-control" pt:placeholder="Email"/>

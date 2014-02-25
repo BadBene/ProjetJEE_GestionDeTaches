@@ -10,9 +10,16 @@
         <h:outputStylesheet name="ressources/css/bootstrap.min.css"/>
         <link href="ressources/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
     </h:head>
-    <h:body style="width: 250px; margin: 100px auto;background-color: #eee;">
+    <h:body style="width: 350px; margin: 100px auto;background-color: #eee;">
+        <div class="page-header">
+            <h1>Modifier la tache<br/><small>#{connexionUtilisateur.utilisateur.nom} #{connexionUtilisateur.utilisateur.prenom}</small></h1>
+            <h:form>
+                <h:commandLink value="Accueil" action="accueil.xhtml"/>
+            </h:form>
+        </div>
 
         <h:panelGroup layout="block">
+            
             <f:metadata>
                 <f:viewParam name="pid" value="#{nouvelleTaches.pid}" />
                 <f:event type="javax.faces.event.PreRenderComponentEvent" listener="#{nouvelleTaches.detailTache}" />

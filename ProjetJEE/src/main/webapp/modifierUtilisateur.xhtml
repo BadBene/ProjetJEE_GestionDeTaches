@@ -4,7 +4,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-    xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
     <head>
         <title>Modifier Utilisateur</title>
         <meta name="viewport" content="width=device-width"/>
@@ -17,28 +17,35 @@
             <f:event type="javax.faces.event.PreRenderComponentEvent" listener="#{nouveauUtilisateur.detailUtilisateur}" />
         </f:metadata>
 
+        <div class="page-header">
+            <h1>Modifier utilisateur<br/><small>#{connexionUtilisateur.utilisateur.nom} #{connexionUtilisateur.utilisateur.prenom}</small></h1>
+            <h:form>
+                <h:commandLink value="Accueil" action="accueil.xhtml"/>
+            </h:form>
+        </div>
+        
         <h:panelGroup layout="block">
             <h:form>
                 <center><h2 class="form-signin-heading">Modifier #{nouveauUtilisateur.utilisateur.login}</h2></center>
-                    <h:inputText label="#{nouveauUtilisateur.utilisateur.login}" value="#{nouveauUtilisateur.utilisateur.login}" class="form-control" pt:placeholder="Login"/>
-                    
-                    <h:inputSecret value="#{nouveauUtilisateur.utilisateur.motDePasse}" class="form-control" pt:placeholder="Mot de passe"/>
-                    
-                    <h:inputText value="#{nouveauUtilisateur.utilisateur.nom}" class="form-control" pt:placeholder="Nom"/>
-                   
-                    <h:inputText value="#{nouveauUtilisateur.utilisateur.prenom}" class="form-control" pt:placeholder="Prenom"/>
-                   
-                    <h:inputText value="#{nouveauUtilisateur.utilisateur.email}" class="form-control" pt:placeholder="Email"/>
-                    <c:if test="#{nouveauUtilisateur.utilisateurConnecte.role.id eq 1}">
-                        <h:outputLabel value="Role"/>
+                <h:inputText label="#{nouveauUtilisateur.utilisateur.login}" value="#{nouveauUtilisateur.utilisateur.login}" class="form-control" pt:placeholder="Login"/>
 
-                        <h:selectOneMenu value="#{nouveauUtilisateur.roleModifie}" >
-                            <f:selectItem itemLabel="#{nouveauUtilisateur.utilisateur.role.nom}" itemValue="#{nouveauUtilisateur.utilisateur.role.id}"/>
-                            <f:selectItems value="#{nouveauUtilisateur.listeRole}" var="r" itemLabel="#{r.nom}" itemValue="#{r.id}" />
-                            <f:converter converterId="javax.faces.Long"/>
-                        </h:selectOneMenu>
+                <h:inputSecret value="#{nouveauUtilisateur.utilisateur.motDePasse}" class="form-control" pt:placeholder="Mot de passe"/>
 
-                    </c:if>
+                <h:inputText value="#{nouveauUtilisateur.utilisateur.nom}" class="form-control" pt:placeholder="Nom"/>
+
+                <h:inputText value="#{nouveauUtilisateur.utilisateur.prenom}" class="form-control" pt:placeholder="Prenom"/>
+
+                <h:inputText value="#{nouveauUtilisateur.utilisateur.email}" class="form-control" pt:placeholder="Email"/>
+                <c:if test="#{nouveauUtilisateur.utilisateurConnecte.role.id eq 1}">
+                    <h:outputLabel value="Role"/>
+
+                    <h:selectOneMenu value="#{nouveauUtilisateur.roleModifie}" >
+                        <f:selectItem itemLabel="#{nouveauUtilisateur.utilisateur.role.nom}" itemValue="#{nouveauUtilisateur.utilisateur.role.id}"/>
+                        <f:selectItems value="#{nouveauUtilisateur.listeRole}" var="r" itemLabel="#{r.nom}" itemValue="#{r.id}" />
+                        <f:converter converterId="javax.faces.Long"/>
+                    </h:selectOneMenu>
+
+                </c:if>
                 <h:commandButton value="Modifier votre compte" action="#{nouveauUtilisateur.modifierUtilisateur}" class="btn btn-lg btn-primary btn-block"/>
             </h:form>
         </h:panelGroup>

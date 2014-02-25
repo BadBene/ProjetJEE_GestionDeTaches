@@ -230,7 +230,6 @@ public class CreerTache {
      */
     public String modifierTache() {
 
-        FacesContext.getCurrentInstance().addMessage("connexionForm:msLogin", new FacesMessage("PID " + pid));
         Tache tacheTMP = tacheEJB.findTache(pid);
         tache.setId(pid);
         tache.setResponsable(tacheTMP.getResponsable());

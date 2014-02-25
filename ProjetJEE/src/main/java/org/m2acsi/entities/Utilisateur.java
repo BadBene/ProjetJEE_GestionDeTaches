@@ -3,6 +3,7 @@ package org.m2acsi.entities;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -62,7 +63,7 @@ public class Utilisateur implements Serializable{
 //    @Pattern(regexp = "^[a-zA-Z0-9\\._-]+@[a-zA-Z0-9\\.-]{2,}[\\.][a-zA-Z]{2,4}$")
     private String email;
     
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE)
     private List<Tache> listeDeParticipation;
     
     
@@ -148,9 +149,9 @@ public class Utilisateur implements Serializable{
     }
     
     public void removeTache(Tache tache){
-        if(listeDeParticipation.contains(tache)){
+//        if(listeDeParticipation.contains(tache)){
             listeDeParticipation.remove(tache);
-        }
+//        }
     }
     
     @Override

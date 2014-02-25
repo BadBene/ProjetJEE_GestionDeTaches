@@ -3,6 +3,7 @@ package org.m2acsi.entities;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -50,7 +51,7 @@ public class Tache implements Serializable {
     /**
      * utilisateurs participants a la tache
      */
-    @ManyToMany(mappedBy = "listeDeParticipation")
+    @ManyToMany(mappedBy = "listeDeParticipation", cascade = CascadeType.MERGE)
     private List<Utilisateur> participants;
     
     /**
